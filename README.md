@@ -1,3 +1,5 @@
 # Project
 
-Yaghyesh Ghimire
+# Contributors
+- Yaghyesh Ghimire
+- Ashok Timsina
