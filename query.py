@@ -1,11 +1,7 @@
 from pymongo import MongoClient
 
-# Connect to MongoDB
-client = MongoClient("mongodb+srv://ap7897:C5CbV5CYC2II9g0Z@cluster0.tzf3m.mongodb.net/")
-db = client["eyeglasses_db"]
-stores_collection = db["stores"]
-
-def get_store_and_glasses():
+# helper function to display all the data in the database
+def get_store_and_glasses(stores_collection):
     # Fetch all stores and their glass frames
     stores = stores_collection.find({}, {"name": 1, "location": 1, "glassFrames": 1})
 
@@ -26,8 +22,4 @@ def get_store_and_glasses():
                 print(f"       {colour}")
         print("-" * 40)
 
-# Call the function to display store details and glasses
-get_store_and_glasses()
 
-# Close the connection
-client.close()

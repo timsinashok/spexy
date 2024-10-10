@@ -16,7 +16,7 @@ Each pair of glasses has attributes like colors, links, and images. MongoDB's fl
 MongoDB also scales horizontally, so as the number of glasses and stores grows, the database can handle larger volumes of data without performance loss. Moreover, it simplifies relationships by referencing store data using `Store ID`, without the complexity of foreign keys or joins that SQL databases typically require.
 
 ## Schema
-![schema](https://github.com/user-attachments/assets/cf30dcdd-21cc-4562-a72b-ebf9480c391e)
+![schema](Schema_drawing.png)
 
 ## Collections
 

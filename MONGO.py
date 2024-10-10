@@ -1,9 +1,13 @@
 import pymongo
 import pandas as pd
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+mongodb_uri = os.getenv('MONGODB_URI')
+print(mongodb_uri)
 
-
-client = pymongo.MongoClient("mongodb+srv://ap7897:C5CbV5CYC2II9g0Z@cluster0.tzf3m.mongodb.net/")
+client = pymongo.MongoClient(mongodb_uri)
 
 # Select or create the database
 db = client["eyeglasses_db"]
@@ -50,6 +54,7 @@ def insert_glasses_to_mongo(glasses_csv):
             "Link": row["Link"],
             "Currency": row["Currency"],
             "Available Colors": available_colors
+            ## "Image" : row["Image"] # yet to add image to the database
         }
 
         # Find the corresponding store by Store ID and add the glass to its "Glasses" array
@@ -61,11 +66,12 @@ def insert_glasses_to_mongo(glasses_csv):
     print("Inserted glasses and linked them to stores in MongoDB.")
 
 # Call the functions to insert data from both CSV files
-stores_csv = "Stores.csv"  # path to stores CSV file
-glasses_csv = "cleaned_round_glasses_with_store_id.csv"  #path to glass frames CSV file
+stores_csv = "Sample_Data/Stores.csv"  # path to stores CSV file
+glasses_csv = "Sample_Data/cleaned_round_glasses_with_store_id.csv"  #path to glass frames CSV file
 
 # Insert stores
 insert_stores_to_mongo(stores_csv)
-
 # Insert glasses and link them to stores
 insert_glasses_to_mongo(glasses_csv)
+
+
