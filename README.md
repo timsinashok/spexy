@@ -42,15 +42,21 @@ This collection stores the details of stores where the glasses are available. It
 ## How to Run
 
 1. Clone this repository to your machine and navigate to the project directory:  
-   ```https://github.com/bipana06/Final_Project_PPDS.git```
 
-2. Create a `.env` file in the project, including the MongoDB connection string:
+   ```
+   https://github.com/bipana06/Final_Project_PPDS.git
+   ```
+
+3. Create a `.env` file in the project, including the MongoDB connection string:
 
     ```
     MONGODB_URI="mongodb+srv://<db_username>:<db_password>@<cluster_url>/<database_name>?retryWrites=true&w=majority&appName=<cluster_name>"
     ```
-3.  Install the required packages
-   ```pip install -r requirements.txt```
+4.  Install the required packages
+
+  ```
+  pip install -r requirements.txt
+  ```
     
 5. Run the script:
 
