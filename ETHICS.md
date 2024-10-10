@@ -1,29 +1,58 @@
 # Ethical Considerations of Web Scraping
 
-This project scrapes the webpage [https://www.eyebuydirect.com/eyeglasses/](https://www.eyebuydirect.com/eyeglasses/) and I have made the following ethical considerations while working on the project: 
+This project involves scraping publicly available data from the webpage [https://www.eyebuydirect.com/eyeglasses/](https://www.eyebuydirect.com/eyeglasses/) to recommend glasses to users based on their face shape. I have carefully considered several ethical principles to ensure that my scraping activities are responsible, transparent, and aligned with best practices. Below are the key ethical considerations for this project:
 
-1. **Respect for Website Terms of Service** : Many websites have terms of service that explicitly prohibit or restrict web scraping. I have carefully reviewed `robots.txt` file of the website and have confirmed that Web-agents can ethically scrape `https://www.eyebuydirect.com/eyeglasses/` this webpage. 
+## 1. Respect for Website Terms of Service
+It is crucial to respect the terms of service set by the website being scraped. Many websites explicitly prohibit or restrict web scraping activities, and violating these terms can have legal and ethical implications.
 
-2. **Data Privacy** : `https://www.eyebuydirect.com/eyeglasses/` is a publicly available website and we have only scrapped publicly available information which is the name price and available colors for the glasses. I have not scrapped any personal data from the website. 
+- **Action Taken**: We have reviewed the `robots.txt` file of [eyebuydirect.com](https://www.eyebuydirect.com) and confirmed that web agents are allowed to scrape the `/eyeglasses/` page. This confirms that my scraping activity complies with the site's ethical guidelines for web scraping.
 
-3. **Rate Limiting**: Excessive scraping can put a significant load on a website's server, potentially affecting its performance and availability for other users.To minimize the impact on website performance, I implemented rate limiting in our scraping scripts. This ensures that I do not overwhelm the server with too many requests in a short period.
+## 2. Data Privacy and Public Availability
+Data privacy is a significant concern when scraping information from websites. Collecting personal data without user consent or scraping information that is not publicly accessible violates privacy standards.
 
-4. **Respect for Intellectual Property**: The content on websites is often protected by copyright laws. Scraping and using this content without permission can infringe on intellectual property rights. I only scrape data that is publicly available and do not use it for commercial purposes without proper authorization. I give credit to the original sources where applicable.
+- **Action Taken**: We have ensured that only publicly available data is scraped, such as the **name of the glasses**, **price**, **available color choices**, and **product links**. No personal data, such as user information or any data not publicly visible, is collected during the scraping process.
 
-### Edited after 2nd Project was graded
-What data are Scraped:
-- Name of Glass
-- Price of Glass
-- Link to the product
-- Color choices available
+## 3. Minimizing Server Load Through Rate Limiting
+Excessive web scraping can overload a website’s servers, which can negatively impact the site's availability and performance for other users.
 
-All these data are publicly avialiable in the website. And they do not contain any personal information.
+- **Action Taken**: To prevent this, we have implemented rate limiting in my scraping scripts. This ensures that requests to the server are spaced out over time, minimizing the risk of server overload and ensuring that my activities do not disrupt the website's normal operations.
 
-## Why are you scraping the data? 
-As the goal of the project is to recommend glasses to people based on the face shape, the project would need some data to make the recommendations.
+## 4. Respect for Intellectual Property
+Website content, including text, images, and product information, is often protected by copyright or other intellectual property rights. It is important to respect these rights and use the data responsibly.
 
-### What purposes will the data be used for?
-The data will be used only to recommend glasses to people based on the face shape. There will also be a link to the product on the original website. The data will be filtered based on user's query. 
- 
+- **Action Taken**: We only scrape product-related data that is publicly visible and avoid any content protected by copyright (such as product descriptions or images) without permission. Additionally, this data is used solely for personal, non-commercial purposes related to my project and not for any profit-generating or commercial activities. Where applicable, we provide credit to the original sources.
 
-By following the guidelines above, I conducted web scraping in an ethical and responsible manner.
+## 5. Transparency in Data Use
+It is important to clarify the purpose for which the scraped data will be used and ensure that this purpose aligns with ethical standards.
+
+- **Data Scraped**: 
+    - Name of Glass
+    - Price of Glass
+    - Link to the Product
+    - Available Color Choices
+
+- **Purpose**: The goal of this project is to recommend suitable glasses to users based on their face shape. The scraped data will be used to populate a recommendation engine, which filters glasses based on the user's queries. Users will also be provided with a link to the product on the original website, ensuring transparency in sourcing.
+
+## 6. Compliance with Legal Standards
+In addition to ethical guidelines, compliance with relevant legal frameworks is critical when conducting web scraping. This includes adhering to data protection regulations such as the General Data Protection Regulation (GDPR) and other applicable laws.
+
+- **Action Taken**: By restricting my data scraping to publicly available, non-personal information, we have ensured that the project complies with privacy and data protection laws. No personal data is collected, processed, or stored as part of this project.
+
+---
+
+# Additional Considerations for the Project
+
+## Why Are You Scraping the Data?
+The primary goal of this project is to provide personalized recommendations for glasses based on a user’s face shape. In order to make these recommendations, the project needs access to a range of glasses data, including the **name of the glasses**, **price**, **available colors**, and **product links**.
+
+- **Reasoning**: Users often struggle to find glasses that match their face shape and personal preferences. By collecting data on various glasses, the project can generate tailored recommendations based on the user's input, providing a more efficient and enjoyable shopping experience.
+
+## What Purposes Will the Data Be Used For?
+The data will be used exclusively to recommend glasses that match the user's face shape and preferences. The user will be shown a list of suggested glasses, along with a direct link to the product on the original [eyebuydirect.com](https://www.eyebuydirect.com) website.
+
+- **How the Data Will Be Used**:
+    - The recommendation engine will filter the scraped data based on user queries (e.g., face shape, preferred price range, available colors).
+    - Once the user receives a recommendation, they can click on the provided link to view the product on the original website.
+    - The data will be used solely for this recommendation process and will not be stored, shared, or used for any other purposes beyond the scope of this project.
+
+By following the guidelines outlined above, we have ensured that the web scraping activities conducted for this project are ethical, transparent, and responsible. No personal or sensitive data is collected, and the project adheres to all applicable legal and ethical standards.
