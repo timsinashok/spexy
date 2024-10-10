@@ -4,7 +4,7 @@
 - Ashok Timsina
 - Bipana Bastola
   
-![schema](https://github.com/user-attachments/assets/cf30dcdd-21cc-4562-a72b-ebf9480c391e)
+
 # Database
 
 **Specomender** uses a MongoDB-based database schema designed to manage, retrieve, and store data related to stores and glasses. It consists of the following collections:
@@ -14,6 +14,9 @@
 Each pair of glasses has attributes like colors, links, and images. MongoDB's flexible structure allows us to store all these details in a single document, making retrieval easy without needing complex joins like in SQL. In SQL, handling this kind of unstructured or semi-structured data requires complex queries, while MongoDB allows us to store all product details in one place.
 
 MongoDB also scales horizontally, so as the number of glasses and stores grows, the database can handle larger volumes of data without performance loss. Moreover, it simplifies relationships by referencing store data using `store_ID`, without the complexity of foreign keys or joins that SQL databases typically require.
+
+## Schema
+![schema](https://github.com/user-attachments/assets/cf30dcdd-21cc-4562-a72b-ebf9480c391e)
 
 ## Collections
 
@@ -46,8 +49,10 @@ This collection stores the details of stores where the glasses are available. It
     ```
     MONGODB_URI="mongodb+srv://<db_username>:<db_password>@<cluster_url>/<database_name>?retryWrites=true&w=majority&appName=<cluster_name>"
     ```
-
-3. Run the script:
+3.  Install the required packages
+   ```pip install -r requirements.txt```
+    
+5. Run the script:
 
     ```
     python mongo.py
