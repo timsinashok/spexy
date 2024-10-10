@@ -61,5 +61,5 @@ This collection stores the details of stores where the glasses are available. It
 5. Run the script:
 
     ```
-    python mongo.py
+    python MONGO.py
     ```
