@@ -44,13 +44,13 @@ This collection stores the details of stores where the glasses are available. It
 1. Clone this repository to your machine and navigate to the project directory:  
 
    ```
-   https://github.com/bipana06/Final_Project_PPDS.git
+   git clone https://github.com/bipana06/Final_Project_PPDS.git
    ```
 
 3. Create a `.env` file in the project, including the MongoDB connection string:
 
     ```
-    MONGODB_URI="mongodb+srv://<db_username>:<db_password>@<cluster_url>/<database_name>?retryWrites=true&w=majority&appName=<cluster_name>"
+    MONGODB_URI=mongodb+srv://<db_username>:<db_password>@<cluster_url>/<database_name>?retryWrites=true&w=majority&appName=<cluster_name>
     ```
 4.  Install the required packages
 
