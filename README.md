@@ -3,11 +3,18 @@
 - Yaghyesh Ghimire
 - Ashok Timsina
 - Bipana Bastola
-  
+ 
+# Project Name: Specommender
+Specommender is a platform for recommendign eye glasses based on the shape of the face of the user.   
 
-# Database
+# Eyeglasses Database
 
-**Specomender** uses a MongoDB-based database schema designed to manage, retrieve, and store data related to stores and glasses. It consists of the following collections:
+**Specomender** uses a MongoDB-based database schema designed to manage, retrieve, and store data related to stores and glasses. Currently we provide a few CRUD functionalities in the database through a Command Line Interface. 
+
+- Add Scraped data to the database
+- Read the store data and explore a particular store
+- Update Store Name
+- Delete a particular store 
 
 ## Why MongoDB?
 
