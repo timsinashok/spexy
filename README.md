@@ -4,4 +4,4 @@
 - Ashok Timsina
 - Bipana Bastola
   
-![schema drawio](https://github.com/user-attachments/assets/beea6e82-bbe4-4c68-b712-76099ea23cb7)
+![schema](https://github.com/user-attachments/assets/cf30dcdd-21cc-4562-a72b-ebf9480c391e)
