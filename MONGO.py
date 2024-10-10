@@ -28,17 +28,23 @@ def insert_stores_to_mongo(stores_csv):
         # Convert DataFrame rows into dictionaries and insert them into MongoDB
         store_docs = []
         for _, row in stores_data.iterrows():
-            store_doc = {
-                "Store ID": row["Store ID"],
-                "Store Name": row["Store Name"],
-                "Location": row["Location"],
-                "Glasses": []  # Initialize an empty list of glasses to be added later
-            }
-            store_docs.append(store_doc)
+            # Check if a store with the same "Store ID" already exists in the collection
+            existing_store = stores_collection.find_one({"Store ID": row["Store ID"]})
+            if existing_store is None:
+                store_doc = {
+                    "Store ID": row["Store ID"],
+                    "Store Name": row["Store Name"],
+                    "Location": row["Location"],
+                    "Glasses": []  # Initialize an empty list of glasses to be added later
+                }
+                store_docs.append(store_doc)
 
-        # Insert all stores into MongoDB
-        stores_collection.insert_many(store_docs)
-        print(f"Inserted {len(store_docs)} stores into MongoDB.")
+        # Insert all new stores into MongoDB
+        if store_docs:
+            stores_collection.insert_many(store_docs)
+            print(f"Inserted {len(store_docs)} new stores into MongoDB.")
+        else:
+            print("No new stores to insert.")
     except Exception as e:
         print(f"An error occurred while inserting stores: {e}")
 
@@ -65,13 +71,16 @@ def insert_glasses_to_mongo(glasses_csv):
                 "Available Colors": available_colors
             }
 
-            # Find the corresponding store by Store ID and add the glass to its "Glasses" array
-            stores_collection.update_one(
-                {"Store ID": row["Store ID"]},  # Ensure Store ID is present in CSV
-                {"$push": {"Glasses": glass_doc}}
-            )
+            # Check if a glass with the same "Glass Name" already exists in the collection
+            existing_glass = stores_collection.find_one({"Glasses.Glass Name": row["Glass Name"]})
+            if existing_glass is None:
+                # Find the corresponding store by Store ID and add the glass to its "Glasses" array
+                stores_collection.update_one(
+                    {"Store ID": row["Store ID"]},  # Ensure Store ID is present in CSV
+                    {"$push": {"Glasses": glass_doc}}
+                )
 
-        print("Inserted glasses and linked them to stores in MongoDB.")
+        print("Inserted new glasses and linked them to stores in MongoDB.")
     except Exception as e:
         print(f"An error occurred while inserting glasses: {e}")
 
