@@ -1,3 +1,6 @@
 pymongo
 python-dotenv
 pandas
+fastapi
+uvicorn
+certifi
