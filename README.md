@@ -26,13 +26,18 @@ MongoDB also scales horizontally, so as the number of glasses and stores grows, 
 ## Schema
 ![schema](Schema_drawing.png)
 
+
+# Week 6 API 
+To build an effecient API and organize data properly in our database, we modified our database Schema a little which is presented below:
+
+
 ## Collections
 
 ### 1. Stores Collection
 
 This collection stores the details of stores where the glasses are available. It includes the following fields:
 
-- `_id`: A unique identifier for each store.
+- `_id`: A unique identifier for each store provided by MONGODB.
 - `store_name`: The name of the store.
 - `store_address`: The address of the store.
 - `store_contact`: contact number of the store
@@ -43,7 +48,7 @@ This collection stores the details of stores where the glasses are available. It
 
 This collection stores the details of individual glasses available in various stores. It includes the following fields:
 
-- `_id`: A unique identifier for each pair of glasses.
+- `_id`: A unique identifier for each pair of glasses provided by MONGODB.
 - `Glass_Name`: The name/model of the glasses.
 - `Price`: The price of the glasses.
 - `Colors`: A list of colors available for the glasses.
@@ -51,6 +56,11 @@ This collection stores the details of individual glasses available in various st
 -  `Shape`: shape (round, oval, etc.) of the glass
 - `Image`: Image of the glasses.
 - `store_id`: The ID of the store linked to this glass. 
+
+
+There were only a few modification we had to make:
+- Add `store_id` to each glasses so that we can remove glass from the store if glass is deleted
+- Previously we did not have different collection for glasses, we added new collection for glass so that we can update and delete glasses faster instead of looping through all categories of shapes. 
 
 
 ## How to start and run the DataBase
@@ -80,6 +90,17 @@ Follow the steps given in **`How to start and run the DataBase`** to install all
 
 ## FastAPI server
 You can then run the FastAPI server with `uvicorn main:app --reload` and access the FastAPI docs at `http://localhost:8000/docs` to test the endpoints. 
+
+## Populate Database
+Since the beginning, we have been working with [www.eyebuydirect.com](www.eyebuydirect.com) and scrapping data from them. The **ETHICS.md** file contains the ethical considerations made while scrapping hte data from the website. 
+
+In this sprint we populated the MongoDB database with glasses for 3 types round, oval and square from the eyebuydirect website. We have used the updated Database Schema and populated the database.
+
+To run the scrapping script, update the **MONGODB_URI** environment varialbe and run the following
+
+```python
+python3 scrapper.py
+```
 
 ## Postman
 Additionally, you can use our API in your postman. The following is how you can work with the endpoints. 

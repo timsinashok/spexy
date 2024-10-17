@@ -9,10 +9,6 @@ from fastapi.responses import StreamingResponse
 from gridfs import GridFS
 import base64
 
-# setting up certificate for ssl error
-import certifi
-ca = certifi.where()
-
 # Load environment variables
 load_dotenv()
 mongodb_uri = os.getenv('MONGODB_URI')
@@ -38,6 +34,7 @@ class Store(BaseModel):
     store_contact: str
     store_base_url: str
 
+# Define Pydantic models for request validation
 class Glass(BaseModel):
     Glass_Name: str
     Price: str
@@ -136,8 +133,10 @@ async def get_image(glass_id: str):
     if not glass:
         raise HTTPException(status_code=404, detail="Glass not found")
 
+    # currently we are not handling images because we have not added functionality in api to add iamge
+
     # Get the ObjectId of the image for the glass
-    image_id = glass.get("Image_id")
+    #image_id = glass.get("Image_id")
 
     # if not image_id:
     #     raise HTTPException(status_code=404, detail="Image not found for this glass")
