@@ -126,7 +126,7 @@ async def get_glasses_by_shape(store_name: str, frame_shape: str):
         raise HTTPException(status_code=404, detail="No glasses found for this shape in the specified store")
 
 # Endpoint to get an image for a specific glass
-@app.get("/image/{glass_id}")
+@app.get("/glasses/{glass_id}")
 async def get_image(glass_id: str):
     # Retrieve the glass document from the database
     glass = glasses_collection.find_one({"_id": ObjectId(glass_id)})
@@ -170,13 +170,66 @@ async def search_glasses(
     if min_price is not None or max_price is not None:
         query["Price"] = {}
         if min_price is not None:
-            query["Price"]["$gte"] = min_price
+            query["Price"]["$gte"] = f"${min_price}"
         if max_price is not None:
-            query["Price"]["$lte"] = max_price
+            query["Price"]["$lte"] =f"${min_price}"
     if shape:
         query["Shape"] = shape
 
     glasses = list(glasses_collection.find(query))
     return convert_objectid(glasses)
 
+# New endpoint to update store attributes
+@app.put("/update_store/{store_id}")
+async def update_store(store_id: str, store: Store):
+    update_result = stores_collection.update_one(
+        {"_id": ObjectId(store_id)},
+        {"$set": store.dict()}
+    )
+    if update_result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Store not found")
+    return {"message": "Store updated successfully"}
 
+# New endpoint to update glass attributes
+@app.put("/update_glass/{glass_id}")
+async def update_glass(glass_id: str, glass: Glass):
+    update_result = glasses_collection.update_one(
+        {"_id": ObjectId(glass_id)},
+        {"$set": glass.dict()}
+    )
+    if update_result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Glass not found")
+    return {"message": "Glass updated successfully"}
+
+# New endpoint to delete a store
+@app.delete("/delete_store/{store_id}")
+async def delete_store(store_id: str):
+    store = stores_collection.find_one({"_id": ObjectId(store_id)})
+    if store:
+        # Remove glasses associated with the store
+        for shape in store["glasses"]:
+            glass_ids = store["glasses"][shape]
+            glasses_collection.delete_many({"_id": {"$in": glass_ids}})
+        
+        # Delete the store
+        stores_collection.delete_one({"_id": ObjectId(store_id)})
+        return {"message": "Store and associated glasses deleted successfully"}
+    else:
+        raise HTTPException(status_code=404, detail="Store not found")
+
+# New endpoint to delete a glass
+@app.delete("/delete_glass/{glass_id}")
+async def delete_glass(glass_id: str):
+    glass = glasses_collection.find_one({"_id": ObjectId(glass_id)})
+    if glass:
+        # Remove glass from store's glasses list
+        stores_collection.update_one(
+            {"_id": ObjectId(glass["store_id"])},
+            {"$pull": {f"glasses.{glass['Shape']}": ObjectId(glass_id)}}
+        )
+        
+        # Delete the glass document
+        glasses_collection.delete_one({"_id": ObjectId(glass_id)})
+        return {"message": "Glass deleted successfully"}
+    else:
+        raise HTTPException(status_code=404, detail="Glass not found")
