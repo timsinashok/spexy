@@ -1,0 +1,498 @@
+{
+	"info": {
+		"_postman_id": "e66fc382-19d2-4dc6-8a23-f041c39aef23",
+		"name": "eyeglasses_store API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39072907"
+	},
+	"item": [
+		{
+			"name": "Get Stores",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () { ",
+							"    pm.response.to.have.status(200); ",
+							"});",
+							"",
+							"pm.test(\"Response is an array\", function () {",
+							"    pm.expect(pm.response.json()).to.be.an('array');",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/stores/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"stores",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Stores",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Store added successfully\", function () {",
+							"    pm.expect(pm.response.json().message).to.equal(\"Store added successfully!\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"store_name\": \"yalu1\",\n  \"store_address\": \"yalu2\",\n  \"store_contact\": \"1111111113\",\n  \"store_base_url\": \"yalu.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/add_stores",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"add_stores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add_glass",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Glass added successfully\", function () {",
+							"    pm.expect(pm.response.json().message).to.equal(\"Glass added successfully!\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Glass_Name\": \"Stylish Round Frame\",\n  \"Price\": \"29.99\",\n  \"Colors\": [\"Black\", \"Red\"],\n  \"Link\": \"http://example.com/round-glass\",\n  \"Shape\": \"round\",\n  \"store_id\": \"6710745d5c0bce0ab69bb695\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/add_glass",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"add_glass"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "stores/{store_name}/glasses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response contains glasses\", function () {",
+							"    pm.expect(pm.response.json()).to.be.an('object');",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/stores/{store_name}/glasses",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"stores",
+						"{store_name}",
+						"glasses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update glass",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Glass updated successfully\", function () {",
+							"    pm.expect(pm.response.json().message).to.equal(\"Glass updated successfully\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n    \"Glass_Name\": \"Elegant Round Frame\",\n    \"Price\": \"35.99\",\n    \"Colors\": [\"Black\", \"Green\"],\n    \"Link\": \"http://example.com/elegant-round\",\n    \"Shape\": \"round\",\n    \"store_id\": \"6710831abba4d0ed64a5cf9b\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/update_glass/67108ec1424ed5ea628f2228",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"update_glass",
+						"67108ec1424ed5ea628f2228"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_store",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Store updated successfully\", function () {",
+							"    pm.expect(pm.response.json().message).to.equal(\"Store updated successfully\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"store_name\": \"Eyeglass World\",\n    \"store_address\": \"456 Vision Blvd\",\n    \"store_contact\": \"111-222-3333\",\n    \"store_base_url\": \"http://eyeglassworld.com\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/update_store/6710745d5c0bce0ab69bb695",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"update_store",
+						"6710745d5c0bce0ab69bb695"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search_glasses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Search results returned\", function () {",
+							"    pm.expect(pm.response.json()).to.be.an('array');",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/search_glasses?name=Drums",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"search_glasses"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Drums"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_glasses from store by shape",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response contains glass items\", function () {",
+							"    pm.expect(pm.response.json()).to.be.an('array');",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/stores/eyebuydirect/glasses/round",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"stores",
+						"eyebuydirect",
+						"glasses",
+						"round"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_glass",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Glass deleted successfully\", function () {",
+							"    pm.expect(pm.response.json().message).to.equal(\"Glass deleted successfully\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/delete_glass/67107c5e2d3420e5bded83ea",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"delete_glass",
+						"67107c5e2d3420e5bded83ea"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_store",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Store deleted successfully\", function () {",
+							"    pm.expect(pm.response.json().message).to.equal(\"Store and associated glasses deleted successfully\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/delete_store/64abfdd7613948ecbc52f750",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"delete_store",
+						"64abfdd7613948ecbc52f750"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "store_name",
+			"value": "store_name"
+		}
+	]
+}
