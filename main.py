@@ -23,7 +23,7 @@ app = FastAPI()
 # MongoDB client setup
 try:
     client = pymongo.MongoClient(mongodb_uri, tls=True)
-    db = client["specommenderDB"]
+    db = client["spexy_DB"]
     stores_collection = db["stores"]
     glasses_collection = db["glasses"]
     fs = GridFS(db)
@@ -77,9 +77,10 @@ async def add_glass(glass: Glass):
         "Price": glass.Price,
         "Colors": glass.Colors,
         "Link": glass.Link,
-        "Shape": glass.Shape
+        "Shape": glass.Shape,
+        "store_id": glass.store_id
     }
-    
+   
     # Insert the glass into the glasses collection
     result = glasses_collection.insert_one(glass_doc)
     glass_id = result.inserted_id
@@ -115,9 +116,9 @@ async def get_glasses_for_store(store_name: str):
         raise HTTPException(status_code=404, detail="Store not found")
 
 # Endpoint to get glasses by frame shape for a specific store
-@app.get("/stores/{store_name}/glasses/{frame_shape}")
-async def get_glasses_by_shape(store_name: str, frame_shape: str):
-    store = stores_collection.find_one({"_id": store_name})
+@app.get("/stores/{store_id}/glasses/{frame_shape}")
+async def get_glasses_by_shape(store_id: str, frame_shape: str):
+    store = stores_collection.find_one({"_id": ObjectId(store_id)})
     if store and frame_shape in store["glasses"]:
         glass_ids = store["glasses"][frame_shape]
         shape_glasses = list(glasses_collection.find({"_id": {"$in": glass_ids}}))
@@ -159,9 +160,9 @@ async def get_image(glass_id: str):
 # New endpoint to search for glasses across all stores
 @app.get("/search_glasses")
 async def search_glasses(
-    name: Optional[str] = None, 
-    min_price: Optional[float] = None, 
-    max_price: Optional[float] = None, 
+    name: Optional[str] = None,
+    min_price: Optional[float] = None,
+    max_price: Optional[float] = None,
     shape: Optional[str] = None
 ):
     query = {}
@@ -193,9 +194,12 @@ async def update_store(store_id: str, store: Store):
 # New endpoint to update glass attributes
 @app.put("/update_glass/{glass_id}")
 async def update_glass(glass_id: str, glass: Glass):
+    glass = glass.dict()
+    glass['Glass Name'] = glass['Glass_Name']
+    del glass['Glass_Name']  
     update_result = glasses_collection.update_one(
         {"_id": ObjectId(glass_id)},
-        {"$set": glass.dict()}
+        {"$set": glass}
     )
     if update_result.matched_count == 0:
         raise HTTPException(status_code=404, detail="Glass not found")
@@ -210,7 +214,7 @@ async def delete_store(store_id: str):
         for shape in store["glasses"]:
             glass_ids = store["glasses"][shape]
             glasses_collection.delete_many({"_id": {"$in": glass_ids}})
-        
+       
         # Delete the store
         stores_collection.delete_one({"_id": ObjectId(store_id)})
         return {"message": "Store and associated glasses deleted successfully"}
@@ -227,7 +231,7 @@ async def delete_glass(glass_id: str):
             {"_id": ObjectId(glass["store_id"])},
             {"$pull": {f"glasses.{glass['Shape']}": ObjectId(glass_id)}}
         )
-        
+       
         # Delete the glass document
         glasses_collection.delete_one({"_id": ObjectId(glass_id)})
         return {"message": "Glass deleted successfully"}
