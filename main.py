@@ -22,7 +22,7 @@ app = FastAPI()
 
 # MongoDB client setup
 try:
-    client = pymongo.MongoClient(mongodb_uri)
+    client = pymongo.MongoClient(mongodb_uri, tls=True)
     db = client["specommenderDB"]
     stores_collection = db["stores"]
     glasses_collection = db["glasses"]
@@ -101,9 +101,9 @@ async def get_stores():
     return convert_objectid(stores)
 
 # Endpoint to get all glasses for a specific store
-@app.get("/stores/{store_id}/glasses")
-async def get_glasses_for_store(store_id: str):
-    store = stores_collection.find_one({"_id": ObjectId(store_id)})
+@app.get("/stores/{store_name}/glasses")
+async def get_glasses_for_store(store_name: str):
+    store = stores_collection.find_one({"store_name": store_name})
     if store:
         glasses = {shape: [] for shape in ["oval", "round", "square"]}
         for shape in glasses:
@@ -115,9 +115,9 @@ async def get_glasses_for_store(store_id: str):
         raise HTTPException(status_code=404, detail="Store not found")
 
 # Endpoint to get glasses by frame shape for a specific store
-@app.get("/stores/{store_id}/glasses/{frame_shape}")
-async def get_glasses_by_shape(store_id: str, frame_shape: str):
-    store = stores_collection.find_one({"_id": ObjectId(store_id)})
+@app.get("/stores/{store_name}/glasses/{frame_shape}")
+async def get_glasses_by_shape(store_name: str, frame_shape: str):
+    store = stores_collection.find_one({"_id": store_name})
     if store and frame_shape in store["glasses"]:
         glass_ids = store["glasses"][frame_shape]
         shape_glasses = list(glasses_collection.find({"_id": {"$in": glass_ids}}))
