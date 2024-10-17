@@ -139,14 +139,14 @@ async def get_image(glass_id: str):
     # Get the ObjectId of the image for the glass
     image_id = glass.get("Image_id")
 
-    if not image_id:
-        raise HTTPException(status_code=404, detail="Image not found for this glass")
+    # if not image_id:
+    #     raise HTTPException(status_code=404, detail="Image not found for this glass")
 
     # Retrieve the image from GridFS
-    image = fs.get(image_id)
+    # image = fs.get(image_id)
 
     # Encode the image data as base64
-    image_data = base64.b64encode(image.read()).decode('utf-8')
+    # image_data = base64.b64encode(image.read()).decode('utf-8')
 
     # Return the glass information as a JSON response, including the image data
     return {
@@ -154,7 +154,7 @@ async def get_image(glass_id: str):
         "Price": glass["Price"],
         "Colors": glass["Colors"],
         "Link": glass["Link"],
-        "image_data": image_data
+        # "image_data": image_data
     }
 
 # New endpoint to search for glasses across all stores
