@@ -27,7 +27,7 @@ MongoDB also scales horizontally, so as the number of glasses and stores grows, 
 ![schema](Schema_drawing.png)
 
 
-# Week 6 API 
+### Week 5 Modification and Development
 To build an effecient API and organize data properly in our database, we modified our database Schema a little which is presented below:
 
 
