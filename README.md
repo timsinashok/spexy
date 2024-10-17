@@ -39,7 +39,6 @@ This collection stores the details of stores where the glasses are available. It
 - `store_base_url`: web url of the store.
 - `glasses`: Attribute for the glasses in the store.
 
-
 ### 2. Glasses Collection
 
 This collection stores the details of individual glasses available in various stores. It includes the following fields:
@@ -50,7 +49,6 @@ This collection stores the details of individual glasses available in various st
 - `Colors`: A list of colors available for the glasses.
 - `Link`: A URL link to the product page.
 -  `Shape`: shape (round, oval, etc.) of the glass
-
 - `Image`: Image of the glasses.
 - `store_id`: The ID of the store linked to this glass. 
 
@@ -70,8 +68,7 @@ This collection stores the details of individual glasses available in various st
     ```
 4.  Install the required packages
 
-  ```
-  pip install -r requirements.txt
+  ```pip install -r requirements.txt
   ```
 
 ## Week 6: API
