@@ -68,7 +68,8 @@ This collection stores the details of individual glasses available in various st
     ```
 4.  Install the required packages
 
-  ```pip install -r requirements.txt
+  ```
+    pip install -r requirements.txt
   ```
 
 ## Week 6: API
