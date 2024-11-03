@@ -7,6 +7,7 @@ load_dotenv()
 mongodb_uri = os.getenv('MONGODB_URI')
 print(mongodb_uri)
 
+# Connect to the MongoDB database
 try:
     client = pymongo.MongoClient(mongodb_uri)
 
