@@ -108,5 +108,8 @@ The project currently uses the following mock data:
 - **Form Validation**: Add client-side validation for forms in `LoginForm` and `SignupForm`.
 - **User Authentication**: Implement a proper login flow with token-based authentication.
 
+## Figma Wireframe File Link 
+- Link : https://www.figma.com/design/d2KIPF2vVsHt0SeHk3C0JH/Spexy-wireframe?node-id=1669-162202&t=WABvY4mqyI6lqKnG-1
+
 
 
