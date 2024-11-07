@@ -63,9 +63,13 @@ function RecommendationsList({ apiResponse }) {
             {!loading && !error && recommendations.length === 0 && (
                 <p>No recommendations available for this face shape.</p>
             )}
-            {!loading && !error && recommendations.map((item) => (
-                <RecommendationItem key={item._id} item={item} />
-            ))}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+                {!loading && !error && recommendations.map((item) => (
+                    <div key={item._id} style={{ flex: '1 1 45%', boxSizing: 'border-box' }}>
+                        <RecommendationItem item={item} />
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
