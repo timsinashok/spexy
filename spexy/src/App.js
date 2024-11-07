@@ -40,9 +40,9 @@ function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/main" element={<Main />} />
-                <Route path="/search" element={<Search />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/store" element={<Main />} />
+                <Route path="/" element={<Search />} />
                 <Route path="/admin" element={<Admin />} />
 
                 {/* for signup and forgot password */}
