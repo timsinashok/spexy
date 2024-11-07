@@ -1,6 +1,7 @@
 // src/components/Signup/SignupPage.js
 import React, { useState } from 'react';
 
+// component to display the signup form
 function SignupPage() {
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
@@ -50,6 +51,7 @@ function SignupPage() {
     );
 }
 
+// component for input field
 function InputField({ type, placeholder, value, onChange }) {
     return (
         <input
@@ -64,6 +66,8 @@ function InputField({ type, placeholder, value, onChange }) {
 
 export default SignupPage;
 
+
+// Local styles for the SignupPage component
 const styles = {
     container: {
         display: 'flex',

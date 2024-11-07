@@ -1,6 +1,7 @@
 // src/components/Main/RecommendationItem.js
 import React from 'react';
 
+// Component to display a single recommendation item
 function RecommendationItem({ item }) {
     return (
         <div style={styles.card}>
@@ -17,13 +18,14 @@ function RecommendationItem({ item }) {
                 ))}
             </div>
             <a href={item.Link} target="_blank" rel="noopener noreferrer" style={styles.link}>
-                View Glasses
+                View the glass
             </a>
             <button style={styles.button}>Try</button>
         </div>
     );
 }
 
+// Local styles for the RecommendationItem component
 const styles = {
     card: {
         border: '1px solid #ddd',

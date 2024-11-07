@@ -1,19 +1,3 @@
-// src/components/ForgotPassword/ForgotPasswordPage.js
-// import React from 'react';
-
-// function ForgotPasswordPage() {
-//     return (
-//         <div>
-//             <h2>Forgot Password Page</h2>
-//             {/* Add forgot password form fields here */}
-//         </div>
-//     );
-// }
-
-// export default ForgotPasswordPage;
-
-
-// src/components/ForgotPassword/ForgotPasswordPage.js
 import React, { useState } from 'react';
 
 function ForgotPasswordPage() {
@@ -56,6 +40,7 @@ function ForgotPasswordPage() {
     );
 }
 
+// component for input field
 function InputField({ type, placeholder, value, onChange }) {
     return (
         <input
@@ -70,6 +55,7 @@ function InputField({ type, placeholder, value, onChange }) {
 
 export default ForgotPasswordPage;
 
+// Local styles for the ForgotPassword component
 const styles = {
     container: {
         display: 'flex',

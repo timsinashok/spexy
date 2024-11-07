@@ -1,47 +1,13 @@
-// // src/components/Login/LoginForm.js
-// import React, { useState } from 'react';
-
-// function LoginForm() {
-//     const [username, setUsername] = useState('');
-//     const [password, setPassword] = useState('');
-
-//     const handleLogin = () => {
-//         // Placeholder login function
-//         console.log('Logging in:', username, password);
-//     };
-
-//     return (
-//         <div>
-//             <h2>Login</h2>
-//             <input
-//                 type="text"
-//                 placeholder="Username"
-//                 value={username}
-//                 onChange={(e) => setUsername(e.target.value)}
-//             />
-//             <input
-//                 type="password"
-//                 placeholder="Password"
-//                 value={password}
-//                 onChange={(e) => setPassword(e.target.value)}
-//             />
-//             <button onClick={handleLogin}>Login</button>
-//             <div>
-//                 <a href="/signup">New? Signup here</a> | <a href="/reset">Forgot password?</a>
-//             </div>
-//         </div>
-//     );
-// }
-
-// export default LoginForm;
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+
+// component to display the login form
 function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    // function to handle loginå
     const handleLogin = () => {
         console.log('Logging in:', username, password);
     };
@@ -78,6 +44,7 @@ function LoginForm() {
     );
 }
 
+// component for input field
 function InputField({ type, placeholder, value, onChange }) {
     return (
         <input
@@ -92,6 +59,8 @@ function InputField({ type, placeholder, value, onChange }) {
 
 export default LoginForm;
 
+
+// local styles for the login form
 const styles = {
     container: {
         display: 'flex',

@@ -1,22 +1,6 @@
-// src/components/Main/Header.js
-// import React from 'react';
-
-// function Header() {
-//     return (
-//         <header>
-//             <h1>Store Name</h1>
-//             <button>Profile</button>
-//         </header>
-//     );
-// }
-
-// export default Header;
-
-
-
-// src/components/Main/Header.js
 import React from 'react';
 
+// Header component for the store
 function Header() {
     return (
         <header style={styles.header}>
@@ -28,6 +12,7 @@ function Header() {
 
 export default Header;
 
+// Local styles for the Header component
 const styles = {
     header: {
         display: 'flex',

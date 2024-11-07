@@ -34,6 +34,7 @@ function RecommendationsList({ apiResponse }) {
     //     }
     // }, [apiResponse]);
    
+    // This block of the code is used to fetch the recommendations from the sample data which is used for the assignment
     useEffect(() => {
         const fetchRecommendations = async () => {
             try {
