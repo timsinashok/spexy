@@ -111,4 +111,10 @@ The project currently uses the following mock data:
 ## Figma Wireframe File Link 
 - Link : https://www.figma.com/design/d2KIPF2vVsHt0SeHk3C0JH/Spexy-wireframe?node-id=1669-162202&t=WABvY4mqyI6lqKnG-1
 
+## AI Usage 
+ChatGPT was used to help us implement some of the problem we had in integrating the design element from the wireshark diagrams 
+
+
+
+
 
