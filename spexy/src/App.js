@@ -33,6 +33,9 @@ import Main from './components/Main/MainPage';
 import Search from './components/Search/SearchPage';
 import Admin from './components/Admin/AdminPage';
 
+import Reset from './components/Reset/ForgotPassword';
+import Signup from './components/Signup/SignupForm';
+
 function App() {
     return (
         <Router>
@@ -41,6 +44,10 @@ function App() {
                 <Route path="/main" element={<Main />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/admin" element={<Admin />} />
+
+                {/* for signup and forgot password */}
+                <Route path="/signup" element={<Signup />}/>
+                <Route path="/reset" element={<Reset />}/>
             </Routes>
         </Router>
     );
