@@ -145,3 +145,6 @@ This endpoint deletes a store from the database using the provided store_id. It 
 10. Delete Glass: `DELETE` request with `/delete_glass/{glass_id}`
 
 This endpoint deletes a specific glass from the database using the provided glass_id and updates the store's glasses list accordingly.
+
+
+## Figma Wireframe: `https://www.figma.com/design/d2KIPF2vVsHt0SeHk3C0JH/Spexy-wireframe?node-id=1669-162202&t=ocNednlDr9XlWJR8-1`
