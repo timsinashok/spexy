@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import RecommendationItem from './RecommendationItem';
-import axios from 'axios';
+// import axios from 'axios';
 
 function RecommendationsList({ apiResponse }) {
 
