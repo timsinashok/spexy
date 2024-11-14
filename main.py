@@ -8,13 +8,26 @@ from bson import ObjectId
 from fastapi.responses import StreamingResponse
 from gridfs import GridFS
 import base64
+from fastapi.middleware.cors import CORSMiddleware
 
 # Load environment variables
 load_dotenv()
-mongodb_uri = os.getenv('MONGODB_URI')
+#mongodb_uri = os.getenv('MONGODB_URI')
+mongodb_uri = "mongodb+srv://mongodb:mongodb@cluster0.gwyl2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 # Initialize FastAPI app
 app = FastAPI()
+
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # MongoDB client setup
 try:
@@ -118,7 +131,7 @@ async def get_glasses_by_shape(store_id: str, frame_shape: str):
     store = stores_collection.find_one({"_id": ObjectId(store_id)})
     if store and frame_shape in store["glasses"]:
         glass_ids = store["glasses"][frame_shape]
-        shape_glasses = list(glasses_collection.find({"_id": {"$in": glass_ids}}))
+        shape_glasses = list(glasses_collection.find({"_id": {"$in": glass_ids}}).limit(4))
         return convert_objectid(shape_glasses)
     else:
         raise HTTPException(status_code=404, detail="No glasses found for this shape in the specified store")
