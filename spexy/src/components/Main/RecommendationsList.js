@@ -1,54 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import RecommendationItem from './RecommendationItem';
-// import axios from 'axios';
+import axios from 'axios';
+
+// Recommendations engine
+function recommendGlassesShape(faceShape) {
+    const faceToGlassesMap = {
+        heart: ["oval", "square"],
+        oblong: ["round", "square"],
+        oval: ["square",],
+        round: ["square"],
+        square: ["round", "oval"]
+    };
+    
+    return faceToGlassesMap[faceShape.toLowerCase()] || ["oval", "round", "square"];
+}
 
 function RecommendationsList({ apiResponse }) {
+    const faceShapes = recommendGlassesShape(apiResponse);
 
-    // setting default api response for now to avoid if there is any issue with the api response
-    apiResponse = "round";
-    
     const [recommendations, setRecommendations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    ////// This block of the code connects with api to fetch the recommendations which will be used for later assignments/////
-    
-    // useEffect(() => {
-        // Function to fetch glasses based on the detected face shape
-     
-        //     const fetchRecommendations = async () => {
-    //         try {
-    //             setLoading(true);
-    //             const storeId = "6710784d259452f710e58368";  // Replace with the actual store ID if applicable
-    //             const response = await axios.get(`http://127.0.0.1:8000/stores/${storeId}/glasses/${apiResponse}`);
-    //             setRecommendations(response.data);  // Set the fetched recommendations
-    //             setLoading(false);
-    //         } catch (err) {
-    //             setError("Failed to load recommendations.");
-    //             setLoading(false);
-    //         }
-    //     };
-
-    //     if (apiResponse) {
-    //         fetchRecommendations();  // Only fetch if apiResponse is available
-    //     }
-    // }, [apiResponse]);
-   
-    // This block of the code is used to fetch the recommendations from the sample data which is used for the assignment
     useEffect(() => {
-        const fetchRecommendations = async () => {
+        // Function to fetch glasses for each recommended shape
+        const fetchAllRecommendations = async () => {
             try {
                 setLoading(true);
-                const response = await fetch('sample_data.json');
-                const data = await response.json();
-                setRecommendations(data);  // Set the fetched recommendations
+                const storeId = "6710784d259452f710e58368"; // Replace with the actual store ID if applicable
+                const allRecommendations = []; // To store all fetched recommendations
+
+                // Loop through each face shape and fetch data
+                for (const shape of faceShapes) {
+                    const response = await axios.get(`http://127.0.0.1:8000/stores/${storeId}/glasses/${shape}`);
+                    allRecommendations.push(...response.data); // Append response data to allRecommendations
+                }
+
+                setRecommendations(allRecommendations); // Set the combined recommendations list
                 setLoading(false);
             } catch (err) {
-                setError("Failed to load recommendationsa.");
+                setError("Failed to load recommendations.");
                 setLoading(false);
             }
         };
-        fetchRecommendations();  
+
+        if (apiResponse) {
+            fetchAllRecommendations(); // Only fetch if apiResponse is available
+        }
     }, [apiResponse]);
 
     return (
@@ -74,6 +72,5 @@ function RecommendationsList({ apiResponse }) {
         </div>
     );
 }
-
 export default RecommendationsList;
 

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { InferenceEngine } from "inferencejs";
+import axios from 'axios';
 
 // Component to display the camera feed and capture images
 function CameraDisplay({ setApiResponse, apiKey }) {
@@ -72,37 +73,36 @@ function CameraDisplay({ setApiResponse, apiKey }) {
 
     // Function to handle the submit button click
     const handleSubmit = async () => {
-        console.log("Now sending request to API using inferencejs");
-        const inferEngine = new InferenceEngine();
-        
-        const modelName = "face-shape-detection";
-        const version = "1";
-        const publishableKey = apiKey; // Use the provided API key
-
-        try {
-            const workerId = await inferEngine.startWorker(modelName, version, publishableKey);
-
-            if (capturedImage) {
-                try {
-                    const blob = await (await fetch(capturedImage)).blob();
-                    const imageBitmap = await createImageBitmap(blob);
-                    const predictions = await inferEngine.infer(workerId, imageBitmap);
-                    console.log(predictions);
-
-                    if (predictions && predictions.length > 0) {
-                        setApiResponse(predictions[0].class);
-                    } else {
-                        setApiResponse("No face shape detected");
-                    }
-                } catch (error) {
-                    console.error("Error during inference:", error);
-                    setApiResponse("Error: Unable to detect face shape");
-                }
-            }
-        } catch (error) {
-            console.error("Error initializing inference worker:", error);
-            setApiResponse("Error initializing inference worker");
+        if (!capturedImage) {
+            console.log("No image captured.");
+            return;
         }
+        console.log("Now sending request to API using inferencejs");
+        
+        axios({
+            method: "POST",
+            url: "https://detect.roboflow.com/face-shape-detection/1",
+            params: {
+                api_key: "JemAXJ2X7SOptsVPKxrG"
+            },
+            data: capturedImage,
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        })
+        .then(function(response) {
+            console.log(response.data);
+            if (response.data.predictions){
+                console.log("Face shape detected: ", response.data.predictions[0].class);
+                setApiResponse(response.data.predictions[0].class);
+            }
+            else{
+                console.log("No face shape detected.");
+            }
+        })
+        .catch(function(error) {
+            console.log(error.message);
+        });
     };
 
     return (
