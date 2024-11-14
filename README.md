@@ -16,7 +16,7 @@ The frontend of the app is built using `React` framework and backend is built us
   - [Running the Frontend](#running-the-frontend)
 - [Environment Variables](#environment-variables)
 - [Project Structure](#project-structure)
-- [Contact](#contact)
+- [Figma](#figma)
 
 ---
 
@@ -133,8 +133,8 @@ REACT_APP_RoboflowAPI=your_roboflow_api
 
 ---
 
-## Contact
+## Figma
 
-For any inquiries or feedback, please reach out to our contributors. 
+Link :  https://www.figma.com/design/d2KIPF2vVsHt0SeHk3C0JH/Spexy-wireframe?node-id=1669-162202&t=5hTxoR65c324Cxrv-1
 
 ---
