@@ -12,8 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 # Load environment variables
 load_dotenv()
-#mongodb_uri = os.getenv('MONGODB_URI')
-mongodb_uri = "mongodb+srv://mongodb:mongodb@cluster0.gwyl2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+mongodb_uri = os.getenv('MONGODB_URI')
 
 # Initialize FastAPI app
 app = FastAPI()
