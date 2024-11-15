@@ -78,12 +78,16 @@ function CameraDisplay({ setApiResponse, apiKey }) {
             return;
         }
         console.log("Now sending request to API using inferencejs");
+
+        let id = process.env.REACT_APP_RoboflowAPI;
+
+        console.log("Roboflow ID: ", id);
         
         axios({
             method: "POST",
             url: "https://detect.roboflow.com/face-shape-detection/1",
             params: {
-                api_key: "JemAXJ2X7SOptsVPKxrG"
+                api_key: id
             },
             data: capturedImage,
             headers: {

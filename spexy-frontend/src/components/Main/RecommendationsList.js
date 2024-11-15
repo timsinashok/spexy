@@ -7,7 +7,7 @@ function recommendGlassesShape(faceShape) {
     const faceToGlassesMap = {
         heart: ["oval", "square"],
         oblong: ["round", "square"],
-        oval: ["square",],
+        oval: ["square"],
         round: ["square"],
         square: ["round", "oval"]
     };
@@ -28,13 +28,17 @@ function RecommendationsList({ apiResponse }) {
             try {
                 setLoading(true);
                 const storeId = "6710784d259452f710e58368"; // Replace with the actual store ID if applicable
-                const allRecommendations = []; // To store all fetched recommendations
 
-                // Loop through each face shape and fetch data
-                for (const shape of faceShapes) {
-                    const response = await axios.get(`http://127.0.0.1:8000/stores/${storeId}/glasses/${shape}`);
-                    allRecommendations.push(...response.data); // Append response data to allRecommendations
-                }
+                // Fetch all recommendations concurrently using Promise.all
+                const requests = faceShapes.map(shape =>
+                    axios.get(`http://127.0.0.1:8000/stores/${storeId}/glasses/${shape}`)
+                );
+                
+                // Wait for all requests to complete
+                const responses = await Promise.all(requests);
+
+                // Combine all responses into one array
+                const allRecommendations = responses.flatMap(response => response.data);
 
                 setRecommendations(allRecommendations); // Set the combined recommendations list
                 setLoading(false);
@@ -72,5 +76,5 @@ function RecommendationsList({ apiResponse }) {
         </div>
     );
 }
-export default RecommendationsList;
 
+export default RecommendationsList;
