@@ -86,13 +86,16 @@ By default, the backend will start on port `8000`.
    npm install
    ```
 
-3. Update the `.env` file with your Roboflow API key:
+3. Create and update the `/spexy-frontend/.env` file with your Roboflow API key:
+    ```bash
+   touch .env
+   ```
 
    ```
    REACT_APP_RoboflowAPI=your_roboflow_api
    ```
 
-4. Start the frontend server:
+5. Start the frontend server:
 
    ```bash
    npm start
@@ -114,7 +117,7 @@ MONGODB_URI=your_mongodb_uri
 
 ### Frontend
 
-Add the following to your `.env` file in the `spexy-frontend` folder:
+Also create `.env` file in the `spexy-frontend` folder:
 
 ```
 REACT_APP_RoboflowAPI=your_roboflow_api
