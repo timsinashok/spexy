@@ -81,7 +81,7 @@ function CameraDisplay({ setApiResponse, apiKey }) {
 
         let id = process.env.REACT_APP_RoboflowAPI;
 
-        console.log("Roboflow ID: ", id);
+        //console.log("Roboflow ID: ", id);
         
         axios({
             method: "POST",
