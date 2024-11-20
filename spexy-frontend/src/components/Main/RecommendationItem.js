@@ -93,7 +93,7 @@ function RecommendationItem({ item }) {
             >
                 <img src={item.image_url} alt={item["Glass Name"]} style={styles.image} />
                 <h3 style={styles.name}>{item["Glass Name"]}</h3>
-                <p style={styles.price}>{item.Price}</p>
+                <p style={styles.price}>${item.Price}</p>
                 <div style={styles.colors}>
                     <span>Available Colors: </span>
                     {item.Colors.map((color, index) => (
