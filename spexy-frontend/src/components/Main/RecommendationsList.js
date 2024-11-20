@@ -164,7 +164,7 @@ function RecommendationsList({ apiResponse }) {
                 <p>No recommendations available for this face shape.</p>
             )}
             <div style={styles.recommendationsContainer}>
-                {!loading && !error && recommendations.map((item) => (
+                {!loading && !error && filteredRecommendations.map((item) => (
                     <div key={item._id} style={{ flex: '1 1 45%', boxSizing: 'border-box' }}>
                         <RecommendationItem item={item} />
                     </div>
