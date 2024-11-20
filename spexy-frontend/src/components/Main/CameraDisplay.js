@@ -6,6 +6,7 @@ import axios from 'axios';
 function CameraDisplay({ setApiResponse, apiKey }) {
     const [isCameraOn, setIsCameraOn] = useState(true);
     const [capturedImage, setCapturedImage] = useState(null);
+    const [hoveredButton, setHoveredButton] = useState(null); // Track hovered button
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
 
@@ -109,98 +110,227 @@ function CameraDisplay({ setApiResponse, apiKey }) {
         });
     };
 
-    return (
-        <div style={styles.container}>
-            <h2 style={styles.title}>Camera Display</h2>
+//     return (
+//         <div style={styles.container}>
+//             <h2 style={styles.title}>Camera Display</h2>
 
-            {capturedImage ? (
-                <div style={styles.imageWrapper}>
-                    <img src={capturedImage} alt="Captured" style={styles.capturedImage} />
-                </div>
-            ) : (
-                <div style={{ position: 'relative' }}>
-                    <video ref={videoRef} autoPlay style={styles.video}></video>
-                    <div style={styles.captureSquare}></div> {/* Red square */}
-                </div>
-            )}
+//             {capturedImage ? (
+//                 <div style={styles.imageWrapper}>
+//                     <img src={capturedImage} alt="Captured" style={styles.capturedImage} />
+//                 </div>
+//             ) : (
+//                 <div style={{ position: 'relative' }}>
+//                     <video ref={videoRef} autoPlay style={styles.video}></video>
+//                     <div style={styles.captureSquare}></div> {/* Red square */}
+//                 </div>
+//             )}
 
-            <canvas ref={canvasRef} style={{ display: 'none' }} width="640" height="480"></canvas>
+//             <canvas ref={canvasRef} style={{ display: 'none' }} width="640" height="480"></canvas>
 
-            <div style={styles.buttonContainer}>
-                {capturedImage ? (
-                    <button style={styles.button} onClick={retakePicture}>Retake Picture</button>
-                ) : (
-                    <button style={styles.button} onClick={captureSquare}>Capture Picture</button>
-                )}
-                <button style={{ ...styles.button, marginLeft: '10px' }} onClick={handleSubmit}>
-                    Submit
-                </button>
+//             <div style={styles.buttonContainer}>
+//                 {capturedImage ? (
+//                     <button style={styles.button} onClick={retakePicture}>Retake Picture</button>
+//                 ) : (
+//                     <button style={styles.button} onClick={captureSquare}>Capture Picture</button>
+//                 )}
+//                 <button style={{ ...styles.button, marginLeft: '10px' }} onClick={handleSubmit}>
+//                     Submit
+//                 </button>
+//             </div>
+//         </div>
+//     );
+// }
+
+// export default CameraDisplay;
+
+// // Local styles for the CameraDisplay component
+// const styles = {
+//     container: {
+//         width: '100%',
+//         height: '100%',
+//         display: 'flex',
+//         flexDirection: 'column',
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//         padding: '20px',
+//         borderRadius: '8px',
+//     },
+//     title: {
+//         fontSize: '24px',
+//         fontWeight: 'bold',
+//         color: '#333',
+//         fontFamily: 'Arial, sans-serif',
+//     },
+//     imageWrapper: {
+//         display: 'flex',
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//         width: '100%',
+//         height: '100%',
+//     },
+//     capturedImage: {
+//         maxWidth: '100%',
+//         maxHeight: '100%',
+//         borderRadius: '4px',
+//         objectFit: 'cover', // Ensures the image scales proportionally and fills its container
+//     },
+//     video: {
+//         width: '100%',
+//         height: 'auto',
+//         borderRadius: '4px',
+//     },
+//     captureSquare: {
+//         position: 'absolute',
+//         top: '50%',
+//         left: '50%',
+//         width: '50%',
+//         height: '50%',
+//         transform: 'translate(-50%, -50%)',
+//         border: '2px solid red',
+//         boxSizing: 'border-box',
+//     },
+//     buttonContainer: {
+//         marginTop: '10px',
+//         display: 'flex',
+//         justifyContent: 'center',
+//     },
+//     button: {
+//         padding: '10px',
+//         backgroundColor: '#007bff',
+//         color: '#fff',
+//         border: 'none',
+//         borderRadius: '4px',
+//         cursor: 'pointer',
+//         transition: 'background-color 0.3s ease',
+//         fontFamily: 'Arial, sans-serif',
+//     }
+// };
+
+ 
+return (
+    <div style={styles.container}>
+        <h2 style={styles.title}>Camera Display</h2>
+
+        {capturedImage ? (
+            <div style={styles.imageWrapper}>
+                <img src={capturedImage} alt="Captured" style={styles.capturedImage} />
             </div>
+        ) : (
+            <div style={{ position: 'relative' }}>
+                <video ref={videoRef} autoPlay style={styles.video}></video>
+                <div style={styles.captureSquare}></div> {/* Red square */}
+            </div>
+        )}
+
+        <canvas ref={canvasRef} style={{ display: 'none' }} width="640" height="480"></canvas>
+
+        <div style={styles.buttonContainer}>
+            {capturedImage ? (
+                <button
+                    style={hoveredButton === 'retake' ? { ...styles.button, ...styles.buttonHover } : styles.button}
+                    onMouseEnter={() => setHoveredButton('retake')}
+                    onMouseLeave={() => setHoveredButton(null)}
+                    onClick={retakePicture}
+                >
+                    Retake Picture
+                </button>
+            ) : (
+                <button
+                    style={hoveredButton === 'capture' ? { ...styles.button, ...styles.buttonHover } : styles.button}
+                    onMouseEnter={() => setHoveredButton('capture')}
+                    onMouseLeave={() => setHoveredButton(null)}
+                    onClick={captureSquare}
+                >
+                    Capture 📷
+                </button>
+            )}
+            <button
+                style={hoveredButton === 'submit' ? { ...styles.button, ...styles.buttonHover } : styles.button}
+                onMouseEnter={() => setHoveredButton('submit')}
+                onMouseLeave={() => setHoveredButton(null)}
+                onClick={handleSubmit}
+            >
+                Submit
+            </button>
         </div>
-    );
+    </div>
+);
 }
 
 export default CameraDisplay;
 
 // Local styles for the CameraDisplay component
 const styles = {
-    container: {
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '20px',
-        borderRadius: '8px',
-    },
-    title: {
-        fontSize: '24px',
-        fontWeight: 'bold',
-        color: '#333',
-        fontFamily: 'Arial, sans-serif',
-    },
-    imageWrapper: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '100%',
-    },
-    capturedImage: {
-        maxWidth: '100%',
-        maxHeight: '100%',
-        borderRadius: '4px',
-        objectFit: 'cover', // Ensures the image scales proportionally and fills its container
-    },
-    video: {
-        width: '100%',
-        height: 'auto',
-        borderRadius: '4px',
-    },
-    captureSquare: {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        width: '50%',
-        height: '50%',
-        transform: 'translate(-50%, -50%)',
-        border: '2px solid red',
-        boxSizing: 'border-box',
-    },
-    buttonContainer: {
-        marginTop: '10px',
-        display: 'flex',
-        justifyContent: 'center',
-    },
-    button: {
-        padding: '10px',
-        backgroundColor: '#007bff',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '4px',
-        cursor: 'pointer',
-        transition: 'background-color 0.3s ease',
-        fontFamily: 'Arial, sans-serif',
-    }
+container: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '20px',
+    borderRadius: '8px',
+    backgroundColor: '#f1f0eb',
+},
+title: {
+    fontSize: '32px',               
+    fontWeight: '700',              
+    color: '#4B382A',                
+    fontFamily: '"Playfair Display", serif', 
+    textAlign: 'center',            
+    marginBottom: '20px',            
+    letterSpacing: '1px',            
+    lineHeight: '1.3',               
+},
+
+imageWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+
+},
+capturedImage: {
+    maxWidth: '100%',
+    maxHeight: '100%',
+    position:'center',
+    borderRadius: '4px',
+    // objectFit: 'cover',
+},
+video: {
+    width: '100%',
+    height: 'auto',
+    borderRadius: '4px',
+},
+captureSquare: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    width: '50%',
+    height: '50%',
+    transform: 'translate(-50%, -50%)',
+    border: '2px solid red',
+    boxSizing: 'border-box',
+},
+buttonContainer: {
+    marginTop: '10px',
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '10px',
+},
+button: {
+    padding: '10px',
+    backgroundColor: 'transparent',
+    color: 'black',
+    border: '2px solid black',
+    borderRadius: '20px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease, color 0.3s ease', // Smooth transition for color changes
+    fontFamily: '"Playfair Display", serif',
+},
+buttonHover: {
+    backgroundColor: '#4B382A',
+    color: 'white',
+},
 };

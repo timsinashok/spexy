@@ -12,6 +12,7 @@ function MainPage() {
     const styles = {
         mainPageContainer: {
             padding: '20px',
+            backgroundColor: '#f1f0eb',
         },
         contentLayout: {
             display: 'flex',
