@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 function Modal({ item, onClose }) {
     if (!item) return null;
 
-    const modalStyles = { 
+    const modalStyles = {
         overlay: {
             position: 'fixed',
             top: 0,
@@ -61,9 +61,6 @@ function Modal({ item, onClose }) {
                 </div>
                 
                 <img src={item.image_url} alt={item["Glass Name"]} style={{ width: '100%', height: 'auto', marginBottom: '10px' }} />
-                {/* <a href={item.Link} target="_blank" rel="noopener noreferrer" style={{ color: '#1e90ff' }}>
-                    View More Details 🔗
-                </a> */}
                 <button onClick={() => window.open(item.Link, '_blank')} 
                 style={{background: '#4B382A',color: '#fff',border: 'none',padding: '10px 20px',borderRadius: '5px',cursor: 'pointer',marginTop: '15px',fontSize: '16px'
                 }}>
@@ -74,14 +71,20 @@ function Modal({ item, onClose }) {
     );
 }
 
-// Component to display a single recommendation item
 function RecommendationItem({ item }) {
     const [isHovered, setIsHovered] = useState(false);
     const [isButtonHovered, setIsButtonHovered] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false); // State for Modal visibility
 
+    // Function to handle closing of Modal
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
     return (
         <div>
+            {isModalOpen && <Modal item={item} onClose={handleCloseModal} />}
+
             <div
                 style={{
                     ...styles.card,
@@ -93,7 +96,7 @@ function RecommendationItem({ item }) {
             >
                 <img src={item.image_url} alt={item["Glass Name"]} style={styles.image} />
                 <h3 style={styles.name}>{item["Glass Name"]}</h3>
-                <p style={styles.price}>${item.Price}</p>
+                <p style={styles.price}>{item.Price}</p>
                 <div style={styles.colors}>
                     <span>Available Colors: </span>
                     {item.Colors.map((color, index) => (
