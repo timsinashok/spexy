@@ -19,8 +19,13 @@ function RecommendationsList({ apiResponse }) {
     const faceShapes = recommendGlassesShape(apiResponse);
 
     const [recommendations, setRecommendations] = useState([]);
+    const [filteredRecommendations, setFilteredRecommendations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    // Price filter states
+    const [minPrice, setMinPrice] = useState(0);
+    const [maxPrice, setMaxPrice] = useState(500); // Default maximum price
 
     useEffect(() => {
         // Function to fetch glasses for each recommended shape
@@ -41,6 +46,7 @@ function RecommendationsList({ apiResponse }) {
                 const allRecommendations = responses.flatMap(response => response.data);
 
                 setRecommendations(allRecommendations); // Set the combined recommendations list
+                setFilteredRecommendations(allRecommendations); // Initial filtered list
                 setLoading(false);
             } catch (err) {
                 setError("Failed to load recommendations.");
@@ -52,6 +58,15 @@ function RecommendationsList({ apiResponse }) {
             fetchAllRecommendations(); // Only fetch if apiResponse is available
         }
     }, [apiResponse]);
+
+    // Filter recommendations by price range whenever price range or recommendations change
+    useEffect(() => {
+        const filtered = recommendations.filter(item => 
+            item.Price >= minPrice && item.Price <= maxPrice
+        );
+        setFilteredRecommendations(filtered);
+    }, [minPrice, maxPrice, recommendations]);
+
 
 //     return (
 //         <div>
@@ -120,6 +135,29 @@ function RecommendationsList({ apiResponse }) {
             {apiResponse && (
                 <div style={styles.faceShape}>Detected Face Shape: {apiResponse}</div>
             )}
+    
+            {/* Price Filter Controls */}
+            <div style={{ marginBottom: '20px' }}>
+                <label>
+                    Min Price:
+                    <input 
+                        type="number" 
+                        value={minPrice} 
+                        onChange={(e) => setMinPrice(Number(e.target.value))} 
+                        style={{ margin: '0 10px' }}
+                    />
+                </label>
+                <label>
+                    Max Price:
+                    <input 
+                        type="number" 
+                        value={maxPrice} 
+                        onChange={(e) => setMaxPrice(Number(e.target.value))} 
+                        style={{ margin: '0 10px' }}
+                    />
+                </label>
+            </div>
+
             {loading && <p>Loading...</p>}
             {error && <p>{error}</p>}
             {!loading && !error && recommendations.length === 0 && (
