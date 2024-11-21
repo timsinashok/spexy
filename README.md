@@ -78,8 +78,12 @@ By default, the backend will start on port `8000`.
 - Node.js and npm installed on your system
 
 ### Running the Frontend
+Start a new terminal and cd into the Final_Project_PPDS directory. 
+ ```bash
+   cd Final_Project_PPDS
+   ```
 
-1. Navigate to the `spexy-frontend` directory:
+1. Navigate to the `spexy-frontend` directory :
 
    ```bash
    cd spexy-frontend
