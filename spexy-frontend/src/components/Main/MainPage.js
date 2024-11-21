@@ -11,7 +11,7 @@ function MainPage() {
     // Styles for the main page
     const styles = {
         mainPageContainer: {
-            padding: '20px',
+            padding: '2px',
             backgroundColor: '#f1f0eb',
         },
         contentLayout: {
@@ -22,14 +22,14 @@ function MainPage() {
         },
         halfScreen: {
             flex: '1',
-            maxWidth: '50%',
+            maxWidth: '90%',
             padding: '10px',
             boxSizing: 'border-box',
         },
         componentContainer: {
             backgroundColor: '#f9f9f9',
-            padding: '15px',
-            borderRadius: '8px',
+            padding: '0px',
+            borderRadius: '28px',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
             height: '100%', // Ensures the container takes full height
             display: 'flex',

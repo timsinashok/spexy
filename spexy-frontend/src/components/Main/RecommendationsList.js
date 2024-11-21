@@ -32,7 +32,7 @@ function RecommendationsList({ apiResponse }) {
         const fetchAllRecommendations = async () => {
             try {
                 setLoading(true);
-                const storeId = "6710784d259452f710e58368"; // Replace with the actual store ID if applicable
+                const storeId = "673978b6a133fa112e837e70"; // Replace with the actual store ID if applicable
 
                 // Fetch all recommendations concurrently using Promise.all
                 const requests = faceShapes.map(shape =>

@@ -1,51 +1,51 @@
-// src/components/Main/RecommendationItem.js
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import axios from "axios";
 
 function Modal({ item, onClose }) {
     if (!item) return null;
 
     const modalStyles = {
         overlay: {
-            position: 'fixed',
+            position: "fixed",
             top: 0,
             left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
             zIndex: 1000,
         },
         modal: {
-            background: '#fff',
-            borderRadius: '10px',
-            padding: '20px',
-            maxWidth: '600px',
-            width: '90%',
-            boxShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
-            textAlign: 'center',
+            background: "#fff",
+            borderRadius: "10px",
+            padding: "20px",
+            maxWidth: "600px",
+            width: "90%",
+            boxShadow: "0 5px 15px rgba(0, 0, 0, 0.3)",
+            textAlign: "center",
         },
         header: {
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '20px',
-            position: 'relative',
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "20px",
+            position: "relative",
         },
         title: {
             flex: 1,
-            textAlign: 'center',
+            textAlign: "center",
             margin: 0,
         },
         closeButton: {
-            background: '#4B382A',
-            color: '#fff',
-            border: 'none',
-            padding: '10px 20px',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            position: 'absolute',
+            background: "#4B382A",
+            color: "#fff",
+            border: "none",
+            padding: "10px 20px",
+            borderRadius: "5px",
+            cursor: "pointer",
+            position: "absolute",
             right: 0,
         },
     };
@@ -56,15 +56,24 @@ function Modal({ item, onClose }) {
                 <div style={modalStyles.header}>
                     <h2 style={modalStyles.title}>{item["Glass Name"]}</h2>
                     <button style={modalStyles.closeButton} onClick={onClose}>
-                    ✕
+                        ✕
                     </button>
                 </div>
-                
-                <img src={item.image_url} alt={item["Glass Name"]} style={{ width: '100%', height: 'auto', marginBottom: '10px' }} />
-                <button onClick={() => window.open(item.Link, '_blank')} 
-                style={{background: '#4B382A',color: '#fff',border: 'none',padding: '10px 20px',borderRadius: '5px',cursor: 'pointer',marginTop: '15px',fontSize: '16px'
-                }}>
-                View More Details 🔗
+                <img src={item.image_url} alt={item["Glass Name"]} style={{ width: "100%", height: "auto", marginBottom: "10px" }} />
+                <button
+                    onClick={() => window.open(item.Link, "_blank")}
+                    style={{
+                        background: "#4B382A",
+                        color: "#fff",
+                        border: "none",
+                        padding: "10px 20px",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                        marginTop: "15px",
+                        fontSize: "16px",
+                    }}
+                >
+                    View More Details 🔗
                 </button>
             </div>
         </div>
@@ -74,16 +83,40 @@ function Modal({ item, onClose }) {
 function RecommendationItem({ item }) {
     const [isHovered, setIsHovered] = useState(false);
     const [isButtonHovered, setIsButtonHovered] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false); // State for Modal visibility
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [fetchedImage, setFetchedImage] = useState(null);
 
-    // Function to handle closing of Modal
+    // Fetch image from API and handle further processing
+    const handleTryClick = async (link) => {
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/get_image/?glass_link=${encodeURIComponent(link)}`);
+            if (response.status === 200) {
+                const imageUrl = response.data.image_url; // Assuming the API returns { image_url: "URL" }
+                setFetchedImage(imageUrl);
+                console.log("Image fetched:", imageUrl);
+
+                // Pass the image to another function or component
+                // Example: passImageToComponent(imageUrl);
+            } else {
+                console.error("Failed to fetch image:", response.status);
+            }
+        } catch (error) {
+            console.error("Error fetching image:", error);
+        }
+    };
+
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
 
     return (
         <div>
-            {isModalOpen && <Modal item={item} onClose={handleCloseModal} />}
+            {isModalOpen && (
+                <Modal
+                    item={{ ...item, image_url: fetchedImage || item.image_url }}
+                    onClose={handleCloseModal}
+                />
+            )}
 
             <div
                 style={{
@@ -94,7 +127,7 @@ function RecommendationItem({ item }) {
                 onMouseLeave={() => setIsHovered(false)}
                 onClick={() => setIsModalOpen(true)} // Open Modal on click
             >
-                <img src={item.image_url} alt={item["Glass Name"]} style={styles.image} />
+                <img src={fetchedImage || item.image_url} alt={item["Glass Name"]} style={styles.image} />
                 <h3 style={styles.name}>{item["Glass Name"]}</h3>
                 <p style={styles.price}>${item.Price}</p>
                 <div style={styles.colors}>
@@ -102,7 +135,7 @@ function RecommendationItem({ item }) {
                     {item.Colors.map((color, index) => (
                         <span key={index} style={styles.color}>
                             {color}
-                            {index < item.Colors.length - 1 ? ', ' : ''}
+                            {index < item.Colors.length - 1 ? ", " : ""}
                         </span>
                     ))}
                 </div>
@@ -110,6 +143,10 @@ function RecommendationItem({ item }) {
                     View Glass 🔗
                 </a>
                 <button
+                    onClick={(e) => {
+                        e.stopPropagation(); // Prevent triggering the modal
+                        handleTryClick(item.Link);
+                    }}
                     style={{
                         ...styles.button,
                         ...(isButtonHovered ? styles.buttonHover : {}),
@@ -127,69 +164,69 @@ function RecommendationItem({ item }) {
 // Local styles for the RecommendationItem component
 const styles = {
     card: {
-        border: '1px solid #ddd',
-        borderRadius: '8px',
-        padding: '16px',
-        marginBottom: '16px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-        maxWidth: '300px',
-        textAlign: 'center',
-        backgroundColor: '#f9f9f9',
-        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+        border: "1px solid #ddd",
+        borderRadius: "8px",
+        padding: "16px",
+        marginBottom: "16px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+        maxWidth: "300px",
+        textAlign: "center",
+        backgroundColor: "#f9f9f9",
+        transition: "transform 0.3s ease, box-shadow 0.3s ease",
         fontFamily: '"Playfair Display", serif',
-        cursor: 'pointer',
+        cursor: "pointer",
     },
     hoverEffect: {
-        transform: 'scale(1.05)',
-        boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+        transform: "scale(1.05)",
+        boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
     },
     image: {
-        width: '100%',
-        height: 'auto',
-        borderRadius: '8px',
-        marginBottom: '16px',
+        width: "100%",
+        height: "auto",
+        borderRadius: "8px",
+        marginBottom: "16px",
     },
     name: {
-        fontSize: '1.2em',
-        fontWeight: 'bold',
-        color: '#4B382A',
-        margin: '8px 0',
+        fontSize: "1.2em",
+        fontWeight: "bold",
+        color: "#4B382A",
+        margin: "8px 0",
     },
     price: {
-        color: '#ff5722',
-        fontSize: '1em',
-        fontWeight: 'bold',
-        margin: '8px 0',
+        color: "#ff5722",
+        fontSize: "1em",
+        fontWeight: "bold",
+        margin: "8px 0",
     },
     colors: {
-        fontSize: '0.9em',
-        color: '#555',
-        margin: '8px 0',
+        fontSize: "0.9em",
+        color: "#555",
+        margin: "8px 0",
     },
     color: {
-        display: 'inline',
+        display: "inline",
     },
     link: {
-        display: 'inline-block',
-        marginTop: '12px',
-        fontSize: '0.9em',
-        color: '#1e90ff',
-        textDecoration: 'none',
-        marginRight: '12px',
+        display: "inline-block",
+        marginTop: "12px",
+        fontSize: "0.9em",
+        color: "#1e90ff",
+        textDecoration: "none",
+        marginRight: "12px",
     },
     button: {
-        marginTop: '12px',
-        padding: '5px 20px',
-        fontSize: '1em',
-        color: '#4B382A',
-        backgroundColor: 'transparent',
-        borderRadius: '20px',
-        cursor: 'pointer',
-        transition: 'background-color 0.3s ease',
+        marginTop: "12px",
+        padding: "5px 20px",
+        fontSize: "1em",
+        color: "#4B382A",
+        backgroundColor: "transparent",
+        borderRadius: "20px",
+        cursor: "pointer",
+        transition: "background-color 0.3s ease",
     },
     buttonHover: {
-        backgroundColor: '#4B382A',
-        color: 'white',
+        backgroundColor: "#4B382A",
+        color: "white",
     },
 };
 

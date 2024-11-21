@@ -1,85 +1,195 @@
-// src/components/Admin/AdminPage.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
+function GlassesList() {
+    const [glasses, setGlasses] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-const mockGlasses = [
-    { id: 1, name: 'Monntain clear' },
-    { id: 2, name: 'Aurora' },
-];
+    // Fetch glasses for the store "Eye Buy Direct"
+    useEffect(() => {
+        const fetchGlasses = async () => {
+            try {
+                const response = await axios.get("http://127.0.0.1:8000/stores/Eye%20Buy%20Direct/glasses");
+                setGlasses(response.data); // Set fetched glasses data
+                setLoading(false); // Stop loading state
+            } catch (error) {
+                console.error("Error fetching glasses:", error);
+                setError("Failed to fetch glasses. Please try again.");
+                setLoading(false);
+            }
+        };
 
+        fetchGlasses();
+    }, []);
 
-// component to display the admin page
+    const handleDelete = async (glassId) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this glass?");
+        if (!confirmDelete) return;
 
-// this is sample for now, we will update this later
-function AdminPage() {
+        try {
+            await axios.delete(`http://127.0.0.1:8000/delete_glass/${glassId}`);
+            alert("Glass deleted successfully!");
+            // Refresh the list by removing the deleted item
+            setGlasses((prevGlasses) => {
+                const updatedGlasses = { ...prevGlasses };
+                for (const shape in updatedGlasses) {
+                    updatedGlasses[shape] = updatedGlasses[shape].filter((glass) => glass["_id"] !== glassId);
+                }
+                return updatedGlasses;
+            });
+        } catch (error) {
+            console.error("Error deleting glass:", error);
+            alert("Failed to delete glass. Please try again.");
+        }
+    };
+
+    if (loading) {
+        return <div>Loading glasses...</div>;
+    }
+
+    if (error) {
+        return <div>{error}</div>;
+    }
+
+    // Flatten the data into a single array for grid display
+    const glassesFlat = Object.values(glasses).flat();
+
     return (
         <div style={styles.container}>
-            <h2 style={styles.title}>Admin Page</h2>
-            <div style={styles.buttonContainer}>
-                <button style={styles.button}>Scrape</button>
-                <button style={styles.button}>Add</button>
-                <button style={styles.button}>Update</button>
-                <button style={styles.button}>Remove</button>
+            {/* Navbar */}
+            <div style={styles.navbar}>
+            <img src="logo.png" alt="Spexy Logo" style={styles.navLeft} />
+            <img src="https://mma.prnewswire.com/media/2385824/Eyebuydirect_Logo.jpg?p=facebook" alt="Eye Buy Direct Logo" style={styles.navRight} />
+
             </div>
-            <ul style={styles.list}>
-                {mockGlasses.map((glass) => (
-                    <li key={glass.id} style={styles.listItem}>{glass.name}</li>
+
+            {/* Main Content */}
+            <h2 style={styles.title}>Recommended Glasses</h2>
+            <div style={styles.gridContainer}>
+                {glassesFlat.map((glass) => (
+                    <div key={glass["_id"]} style={styles.card}>
+                        <img
+                            src={glass['image_url']}
+                            alt={glass['Glass Name']}
+                            style={styles.image}
+                        />
+                        <h3 style={styles.glassName}>{glass["Glass Name"]}</h3>
+                        <p style={styles.price}>${glass.Price}</p>
+                        <p style={styles.colors}>
+                            Available Colors:{" "}
+                            {Array.isArray(glass["Colors"])
+                                ? glass["Colors"].join(", ")
+                                : "N/A"}
+                        </p>
+                        <a href={glass.Link} target="_blank" rel="noopener noreferrer" style={styles.link}>
+                            View the glass
+                        </a>
+                        <button style={styles.deleteButton} onClick={() => handleDelete(glass["_id"])}>
+                            ✖ {/* Minimal delete icon */}
+                        </button>
+                        <button style={styles.button}>Try</button>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 }
 
-export default AdminPage;
+export default GlassesList;
 
-
-// local styles for the admin page
 const styles = {
     container: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        border: '1px solid #ddd',
-        padding: '20px',
-        width: '400px',
-        margin: '100px auto',
-        borderRadius: '8px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-        backgroundColor: '#f9f9f9',
+        padding: "20px",
+        fontFamily: "Arial, sans-serif",
+    },
+    navbar: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        backgroundColor: "#f9f9f9",
+        padding: "10px 20px",
+        borderRadius: "5px",
+        marginBottom: "20px",
+    },
+    navLeft: {
+        height: "50px",
+    },
+    navRight: {
+        height: "50px",
     },
     title: {
-        marginBottom: '20px',
-        fontSize: '24px',
-        fontWeight: 'bold',
-        color: '#333',
+        fontSize: "24px",
+        fontWeight: "bold",
+        marginBottom: "20px",
+        textAlign: "center",
     },
-    buttonContainer: {
-        display: 'flex',
-        gap: '10px',
-        marginBottom: '20px',
+    gridContainer: {
+        display: "grid",
+        gridTemplateColumns: "repeat(4, 1fr)", // 4 columns
+        gap: "20px",
+    },
+    card: {
+        padding: "20px",
+        border: "1px solid #ddd",
+        borderRadius: "8px",
+        textAlign: "center",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+        position: "relative", // For delete button positioning
+    },
+    image: {
+        width: "100%",
+        height: "auto",
+        marginBottom: "10px",
+        borderRadius: "5px",
+    },
+    glassName: {
+        fontSize: "18px",
+        fontWeight: "bold",
+        margin: "10px 0",
+    },
+    price: {
+        fontSize: "16px",
+        color: "#e74c3c",
+        fontWeight: "bold",
+    },
+    colors: {
+        fontSize: "14px",
+        color: "#555",
+    },
+    link: {
+        display: "block",
+        margin: "10px 0",
+        color: "#3498db",
+        textDecoration: "none",
+        fontWeight: "bold",
+    },
+    deleteButton: {
+        position: "absolute",
+        bottom: "10px", // Place at the bottom
+        right: "10px", // Align to the right
+        background: "#555", // Grayish background
+        color: "#fff", // White cross
+        border: "none",
+        borderRadius: "50%", // Circle shape
+        fontSize: "16px", // Larger cross
+        fontWeight: "bold", // Bold text
+        width: "30px", // Slightly larger circle
+        height: "30px", // Slightly larger circle
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+        boxShadow: "0 3px 6px rgba(0, 0, 0, 0.3)", // Slightly stronger shadow
     },
     button: {
-        padding: '10px 15px',
-        backgroundColor: '#007bff',
-        color: 'white',
-        border: 'none',
-        borderRadius: '4px',
-        cursor: 'pointer',
-        transition: 'background-color 0.3s ease',
-    },
-    
-    list: {
-        listStyleType: 'none',
-        padding: '0',
-        width: '100%',
-        textAlign: 'left',
-    },
-    listItem: {
-        padding: '10px',
-        borderBottom: '1px solid #ddd',
-        fontSize: '16px',
-        color: '#333',
+        padding: "10px 15px",
+        backgroundColor: "#555", // Grayish background
+        color: "#fff", // White text
+        fontWeight: "bold", // Bold text
+        fontSize: "16px", // Larger font
+        border: "none",
+        borderRadius: "5px", // Rounded button
+        cursor: "pointer",
     },
 };
-

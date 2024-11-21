@@ -9,6 +9,9 @@ from fastapi.responses import StreamingResponse
 from gridfs import GridFS
 import base64
 from fastapi.middleware.cors import CORSMiddleware
+import requests
+from bs4 import BeautifulSoup
+from fastapi.responses import JSONResponse
 
 # Load environment variables
 load_dotenv()
@@ -31,7 +34,7 @@ app.add_middleware(
 # MongoDB client setup
 try:
     client = pymongo.MongoClient(mongodb_uri, tls=True)
-    db = client["spexy_DB"]
+    db = client["spexy_DB_2"]
     stores_collection = db["stores"]
     glasses_collection = db["glasses"]
     fs = GridFS(db)
@@ -49,7 +52,7 @@ class Store(BaseModel):
 # Define Pydantic models for request validation
 class Glass(BaseModel):
     Glass_Name: str
-    Price: str
+    Price: float
     Colors: List[str]
     Link: str
     Shape: str
@@ -130,7 +133,7 @@ async def get_glasses_by_shape(store_id: str, frame_shape: str):
     store = stores_collection.find_one({"_id": ObjectId(store_id)})
     if store and frame_shape in store["glasses"]:
         glass_ids = store["glasses"][frame_shape]
-        shape_glasses = list(glasses_collection.find({"_id": {"$in": glass_ids}}).limit(4))
+        shape_glasses = list(glasses_collection.find({"_id": {"$in": glass_ids}}).limit(6))
         return convert_objectid(shape_glasses)
     else:
         raise HTTPException(status_code=404, detail="No glasses found for this shape in the specified store")
@@ -248,3 +251,46 @@ async def delete_glass(glass_id: str):
         return {"message": "Glass deleted successfully"}
     else:
         raise HTTPException(status_code=404, detail="Glass not found")
+
+@app.get("/get_image/")
+async def get_image(glass_link: str):
+    try:
+        response = requests.get(glass_link, headers={"User-Agent": "Mozilla/5.0"})
+        if response.status_code != 200:
+            raise HTTPException(status_code=400, detail="Failed to fetch the webpage.")
+
+        soup = BeautifulSoup(response.content, "html.parser")
+        print('parsed')
+
+        # Locate the div with the specified class
+        slider_item = soup.find("div", class_="image-slider_slider-item__wy9r2")
+        if not slider_item:
+            raise HTTPException(status_code=404, detail="Image container not found.")
+
+        # Find the nested span containing the image
+        image_span = slider_item.find("span")
+        if not image_span:
+            raise HTTPException(status_code=404, detail="Span containing the image not found.")
+
+        # Extract the image tag
+        img_tag = image_span.find("img")
+        if not img_tag or not img_tag.get("src"):
+            raise HTTPException(status_code=404, detail="Image tag or src not found.")
+
+        image_url = img_tag["src"]
+        return JSONResponse(content={"image_url": image_url})
+
+        # print("Image URL:", image_url)
+
+        # # return image_url
+        # # Fetch the image
+        # img_response = requests.get(image_url)
+        # if img_response.status_code != 200:
+        #     raise HTTPException(status_code=400, detail="Failed to download the image.")
+
+        # # Stream the image as a response
+        # return StreamingResponse(BytesIO(img_response.content), media_type="image/jpeg")
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+

@@ -22,7 +22,7 @@ function LoginForm() {
     return (
         <div style={styles.container}>
             <div style={styles.card}>
-                <h1 style={styles.header}>Login</h1>
+            <img src="logo.png" alt="Spexy Logo" style={styles.navLeft} />
                 <input
                     type="text"
                     placeholder="Username"
@@ -97,6 +97,7 @@ const styles = {
         marginBottom: '30px',
         color: '#4B382A',
         fontFamily: '"Playfair Display", serif',
+        height: '40px',
     },
     input: {
         padding: '15px',

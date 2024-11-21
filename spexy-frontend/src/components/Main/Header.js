@@ -1,43 +1,45 @@
 import React from 'react';
 
-// Header component for the store
 function Header() {
     return (
         <header style={styles.header}>
-            <h1 style={styles.title}>Store Name</h1>
-            <button style={styles.button}>Profile</button>
+            <img src="logo.png" alt="Spexy Logo" style={styles.logo} />
+            <img src="https://mma.prnewswire.com/media/2385824/Eyebuydirect_Logo.jpg?p=facebook" alt="Eye Buy Direct Logo" style={styles.title} />
+            {/* <button style={styles.button}>Profile</button> */}
         </header>
     );
 }
 
 export default Header;
 
-// Local styles for the Header component
 const styles = {
     header: {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '10px 20px',
-        borderBottom: '1px solid #ddd',
+        padding: '20px 40px',
         backgroundColor: '#f9f9f9',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        borderBottom: '2px solid #e0e0e0',
+        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+        position: 'sticky',
+        top: '0',
+        zIndex: '1000',
     },
     title: {
-        fontSize: '24px',
-        fontWeight: 'bold',
-        color: '#333',
-        fontFamily: 'Arial, sans-serif', 
+        height: '50px',
     },
     button: {
-        padding: '8px 12px',
-        fontSize: '20px',
-        color: 'white',
-        backgroundColor: 'black',
+        padding: '10px 20px',
+        fontSize: '16px',
+        fontWeight: '600',
+        backgroundColor: '#4B382A',
+        color: '#fff',
         border: 'none',
-        borderRadius: '4px',
+        borderRadius: '20px',
         cursor: 'pointer',
-        fontFamily: 'Arial, sans-serif',
-    }
+        transition: 'background-color 0.3s ease',
+    },
+    logo: {
+        height: '50px',
+    },
 };
-
