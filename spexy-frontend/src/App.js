@@ -7,6 +7,7 @@ import Admin from './components/Admin/AdminPage';
 
 import Reset from './components/Reset/ForgotPassword';
 import Signup from './components/Signup/SignupForm';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 //  App component to handle routing
 function App() {
@@ -16,11 +17,21 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/store" element={<Main />} />
                 <Route path="/" element={<Search />} />
-                <Route path="/admin" element={<Admin />} />
+                
 
                 {/* for signup and forgot password */}
                 <Route path="/signup" element={<Signup />}/>
                 <Route path="/reset" element={<Reset />}/>
+
+                {/* Protect the /admin route */}
+                <Route 
+                    path="/admin" 
+                    element={
+                        <ProtectedRoute>
+                            <Admin />
+                        </ProtectedRoute>
+                    }     
+                />
             </Routes>
         </Router>
     );

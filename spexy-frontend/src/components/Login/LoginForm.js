@@ -11,13 +11,37 @@ function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [hoveredButton, setHoveredButton] = useState(null);
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
     // const navigate = useNavigate();
 
+    // const handleLogin = () => {
+    //     console.log('Logging in:', username, password);
+    //     // Implement login logic here
+    //     // navigate('/dashboard'); // Redirect after login
+    // };
+
     const handleLogin = () => {
-        console.log('Logging in:', username, password);
-        // Implement login logic here
-        // navigate('/dashboard'); // Redirect after login
+        if (!username || !password) {
+            setError('Please enter both username and password.');
+            return;
+        }
+    
+        // Assuming `users` is a hardcoded array or fetched from an API
+        const user = users.find(
+            (user) => user.username === username && user.password === password
+        );
+    
+        if (user) {
+            setError('');
+            // Set authentication flag in localStorage
+            localStorage.setItem('isAuthenticated', 'true');
+            navigate('/admin'); // Redirect to Admin page
+        } else {
+            setError('Invalid username or password');
+        }
     };
+
 
     return (
         <div style={styles.container}>

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function GlassesList() {
     const [glasses, setGlasses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate(); // Initialize the navigate function
 
     // Fetch glasses for the store "Eye Buy Direct"
     useEffect(() => {
@@ -22,6 +24,12 @@ function GlassesList() {
 
         fetchGlasses();
     }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('isAuthenticated'); // Clear authentication flag
+        navigate('/login', { replace: true }); // Redirect to login page
+    };
+
 
     const handleDelete = async (glassId) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this glass?");
@@ -92,11 +100,12 @@ function GlassesList() {
                         <button style={styles.deleteButton} onClick={() => handleDelete(glass["_id"])}>
                             ✖ {/* Minimal delete icon */}
                         </button>
-                        <button style={styles.button}>Try</button>
                     </div>
                 ))}
             </div>
+            <button onClick={handleLogout}>Logout</button>
         </div>
+        
     );
 }
 
