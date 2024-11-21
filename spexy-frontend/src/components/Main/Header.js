@@ -3,8 +3,13 @@ import React from 'react';
 function Header() {
     return (
         <header style={styles.header}>
-            <img src="logo.png" alt="Spexy Logo" style={styles.logo} />
-            <img src="https://mma.prnewswire.com/media/2385824/Eyebuydirect_Logo.jpg?p=facebook" alt="Eye Buy Direct Logo" style={styles.title} />
+           <a href="/" style={{ textDecoration: 'none' }}>
+                <img src="logo.png" alt="Spexy Logo" style={styles.logo} />
+            </a>
+
+            <a href="/admin" style={{ textDecoration: 'none' }}>
+                <img src="https://mma.prnewswire.com/media/2385824/Eyebuydirect_Logo.jpg?p=facebook" alt="Eye Buy Direct Logo" style={styles.title} />
+            </a>
             {/* <button style={styles.button}>Profile</button> */}
         </header>
     );

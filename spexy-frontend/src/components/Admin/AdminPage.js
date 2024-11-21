@@ -59,13 +59,17 @@ function GlassesList() {
         <div style={styles.container}>
             {/* Navbar */}
             <div style={styles.navbar}>
-            <img src="logo.png" alt="Spexy Logo" style={styles.navLeft} />
-            <img src="https://mma.prnewswire.com/media/2385824/Eyebuydirect_Logo.jpg?p=facebook" alt="Eye Buy Direct Logo" style={styles.navRight} />
+            <a href="/" style={{ textDecoration: 'none' }}>
+                <img src="logo.png" alt="Spexy Logo" style={styles.navLeft} />
+            </a>
 
+            <a href="/admin" style={{ textDecoration: 'none' }}>
+                <img src="https://mma.prnewswire.com/media/2385824/Eyebuydirect_Logo.jpg?p=facebook" alt="Eye Buy Direct Logo" style={styles.navRight} />
+            </a>
             </div>
 
             {/* Main Content */}
-            <h2 style={styles.title}>Recommended Glasses</h2>
+            <h2 style={styles.title}> Your Inventory </h2>
             <div style={styles.gridContainer}>
                 {glassesFlat.map((glass) => (
                     <div key={glass["_id"]} style={styles.card}>

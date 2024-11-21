@@ -80,7 +80,7 @@ function Modal({ item, onClose }) {
     );
 }
 
-function RecommendationItem({ item }) {
+function RecommendationItem({ item, setImageUrl }) {
     const [isHovered, setIsHovered] = useState(false);
     const [isButtonHovered, setIsButtonHovered] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -89,14 +89,12 @@ function RecommendationItem({ item }) {
     // Fetch image from API and handle further processing
     const handleTryClick = async (link) => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/get_image/?glass_link=${encodeURIComponent(link)}`);
+            const response = await axios.get(
+                `http://127.0.0.1:8000/get_image/?glass_link=${encodeURIComponent(link)}`
+            );
             if (response.status === 200) {
-                const imageUrl = response.data.image_url; // Assuming the API returns { image_url: "URL" }
-                setFetchedImage(imageUrl);
-                console.log("Image fetched:", imageUrl);
-
-                // Pass the image to another function or component
-                // Example: passImageToComponent(imageUrl);
+                setImageUrl(response.data.image_url); // Update imageUrl in MainPage
+                console.log(response.data.image_url)
             } else {
                 console.error("Failed to fetch image:", response.status);
             }
@@ -144,7 +142,7 @@ function RecommendationItem({ item }) {
                 </a>
                 <button
                     onClick={(e) => {
-                        e.stopPropagation(); // Prevent triggering the modal
+                        e.stopPropagation(); // Prevent modal click
                         handleTryClick(item.Link);
                     }}
                     style={{

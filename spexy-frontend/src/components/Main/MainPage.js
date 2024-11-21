@@ -6,7 +6,9 @@ import RecommendationsList from './RecommendationsList';
 // Main page component
 function MainPage() {
     const [apiResponse, setApiResponse] = useState("");
+    const [imageUrl, setImageUrl] = useState(null); 
     const apiKey = process.env.REACT_APP_RoboflowAPI; // API key for the recommendation service
+    console.log(imageUrl)
 
     // Styles for the main page
     const styles = {
@@ -44,12 +46,15 @@ function MainPage() {
             <div style={styles.contentLayout}>
                 <div style={styles.halfScreen}>
                     <div style={styles.componentContainer}>
-                        <CameraDisplay setApiResponse={setApiResponse} apiKey={apiKey} />
+                        <CameraDisplay setApiResponse={setApiResponse} apiKey={apiKey } imageUrl={imageUrl} />
                     </div>
                 </div>
                 <div style={styles.halfScreen}>
                     <div style={styles.componentContainer}>
-                        <RecommendationsList apiResponse={apiResponse} />
+                    <RecommendationsList
+                        apiResponse={apiResponse}
+                        setImageUrl={setImageUrl} // Pass callback to update imageUrl
+                    />
                     </div>
                 </div>
             </div>

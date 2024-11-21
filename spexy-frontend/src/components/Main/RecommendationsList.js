@@ -15,7 +15,7 @@ function recommendGlassesShape(faceShape) {
     return faceToGlassesMap[faceShape.toLowerCase()] || ["oval", "round", "square"];
 }
 
-function RecommendationsList({ apiResponse }) {
+function RecommendationsList({ apiResponse, setImageUrl }) {
     const faceShapes = recommendGlassesShape(apiResponse);
 
     const [recommendations, setRecommendations] = useState([]);
@@ -166,7 +166,7 @@ function RecommendationsList({ apiResponse }) {
             <div style={styles.recommendationsContainer}>
                 {!loading && !error && filteredRecommendations.map((item) => (
                     <div key={item._id} style={{ flex: '1 1 45%', boxSizing: 'border-box' }}>
-                        <RecommendationItem item={item} />
+                        <RecommendationItem item={item} setImageUrl={setImageUrl} />
                     </div>
                 ))}
             </div>
