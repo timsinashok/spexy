@@ -22,7 +22,12 @@ The frontend of the app is built using `React` framework and backend is built us
 
 ## Getting Started
 
-To get started with Spexy, clone the repository and follow the setup instructions for both the backend and frontend to run the application locally.
+To get started with Spexy, clone the repository and change to the directory. Then follow the setup instructions for both the backend and frontend to run the application locally.
+
+```bash
+git clone https://github.com/bipana06/Final_Project_PPDS.git
+cd Final_Project_PPDS
+```
 
 ---
 
@@ -73,8 +78,12 @@ By default, the backend will start on port `8000`.
 - Node.js and npm installed on your system
 
 ### Running the Frontend
+Start a new terminal and cd into the Final_Project_PPDS directory. 
+ ```bash
+   cd Final_Project_PPDS
+   ```
 
-1. Navigate to the `spexy-frontend` directory:
+1. Navigate to the `spexy-frontend` directory :
 
    ```bash
    cd spexy-frontend
