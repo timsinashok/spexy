@@ -84,9 +84,9 @@ const styles = {
         justifyContent: 'center',
         height: '100vh',
         width: '100vw',               
-        backgroundColor: '#d3d3d3',//'white',
-
-        
+        background: `
+        radial-gradient(circle at 30% 30%, rgba(121, 121, 121, 1), rgba(121, 121, 121, 0) 60%),
+        radial-gradient(circle at 70% 70%, rgba(205, 177, 118, 1), rgba(205, 177, 118, 0) 70%)`,  
     },
     card: {
         backgroundColor: '#f1f0eb', 
@@ -96,15 +96,14 @@ const styles = {
         width: '80%',                  // Set to 80% of viewport width
         maxWidth: '600px',             // Limit max width for larger screens
         textAlign: 'center',
-        // border: '20px solid white'
     },
-    header: {
-        fontSize: '60px',
-        fontWeight: 'bold',
-        marginBottom: '30px',
-        color: '#4B382A',
-        fontFamily: '"Playfair Display", serif', 
-    },
+    // header: {
+    //     fontSize: '60px',
+    //     fontWeight: 'bold',
+    //     marginBottom: '30px',
+    //     color: '#4B382A',
+    //     fontFamily: '"Playfair Display", serif', 
+    // },
     input: {
         padding: '15px',
         border: 'none',
@@ -115,6 +114,7 @@ const styles = {
         backgroundColor: '#bfc4c9',
         outline: 'none',
         marginBottom: '20px',
+        fontFamily: 'Verdana',
     },
     buttonContainer: {
         marginTop: '20px',             // Add margin for more space around buttons
@@ -130,7 +130,7 @@ const styles = {
         borderRadius: '20px',
         cursor: 'pointer',
         transition: 'background-color 0.3s ease, color 0.3s ease',
-        fontFamily: '"Playfair Display", serif',
+        fontFamily: 'Verdana',
     },
     buttonHover: {
         backgroundColor: '#4B382A',
@@ -141,6 +141,6 @@ const styles = {
         display: 'block',
         fontSize: '14px',
         textDecoration: 'underline',
-        fontFamily: '"Playfair Display", serif',
+        fontFamily: 'Verdana',
     },
 };

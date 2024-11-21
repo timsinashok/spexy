@@ -13,9 +13,13 @@ function MainPage() {
     // Styles for the main page
     const styles = {
         mainPageContainer: {
-            padding: '2px',
-            backgroundColor: '#f1f0eb',
-        },
+            // padding: '2px',
+            background: `
+            radial-gradient(circle at 30% 30%, rgba(121, 121, 121, 1), rgba(121, 121, 121, 0) 60%),
+            radial-gradient(circle at 70% 70%, rgba(205, 177, 118, 1), rgba(205, 177, 118, 0) 70%)`,
+            minHeight: '100vh',
+            },
+
         contentLayout: {
             display: 'flex',
             justifyContent: 'center',
@@ -26,14 +30,13 @@ function MainPage() {
             flex: '1',
             maxWidth: '90%',
             padding: '10px',
-            boxSizing: 'border-box',
         },
         componentContainer: {
-            backgroundColor: '#f9f9f9',
+            backgroundColor: '#f1f0eb',
             padding: '0px',
-            borderRadius: '28px',
+            borderRadius: '8px',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-            height: '100%', // Ensures the container takes full height
+            height: '100%',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',

@@ -60,7 +60,9 @@ const styles = {
         justifyContent: 'center',
         height: '100vh',
         width: '100vw',
-        backgroundColor: '#d3d3d3',
+        background: `
+        radial-gradient(circle at 30% 30%, rgba(121, 121, 121, 1), rgba(121, 121, 121, 0) 60%),
+        radial-gradient(circle at 70% 70%, rgba(205, 177, 118, 1), rgba(205, 177, 118, 0) 70%)`,
     },
     card: {
         backgroundColor: '#f1f0eb',
@@ -88,6 +90,7 @@ const styles = {
         backgroundColor: '#bfc4c9',
         outline: 'none',
         marginBottom: '20px',
+        fontFamily: 'Verdana',
     },
     buttonContainer: {
         marginTop: '20px',
@@ -102,7 +105,7 @@ const styles = {
         borderRadius: '20px',
         cursor: 'pointer',
         transition: 'background-color 0.3s ease, color 0.3s ease',
-        fontFamily: '"Playfair Display", serif',
+        fontFamily: 'Verdana',
     },
     buttonHover: {
         backgroundColor: '#4B382A',
@@ -112,7 +115,7 @@ const styles = {
         marginTop: '20px',
         display: 'block',
         fontSize: '14px',
-        fontFamily: '"Playfair Display", serif',
+        fontFamily: 'Verdana',
         textDecoration: 'underline'
     },
 };

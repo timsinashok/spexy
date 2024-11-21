@@ -112,7 +112,7 @@ function CameraDisplay({ setApiResponse, apiKey, imageUrl }) {
 
     return (
         <div style={styles.container}>
-            <h2 style={styles.title}>Camera Display</h2>
+            <h2 style={styles.title}>say CHEESE</h2>
 
             {/* Show Tryon when both capturedImage and imageUrl are available */}
             {showTryon && capturedImage && imageUrl ? (
@@ -178,15 +178,15 @@ const styles = {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '20px',
+        padding: '30px',
         borderRadius: '8px',
-        backgroundColor: '#f1f0eb',
+        backgroundColor: '#f1f0eb',   
     },
     title: {
         fontSize: '32px',
         fontWeight: '700',
         color: '#4B382A',
-        fontFamily: '"Playfair Display", serif',
+        fontFamily: 'Verdana',
         textAlign: 'center',
         marginBottom: '20px',
         letterSpacing: '1px',
@@ -233,7 +233,8 @@ const styles = {
         borderRadius: '20px',
         cursor: 'pointer',
         transition: 'background-color 0.3s ease, color 0.3s ease',
-        fontFamily: '"Playfair Display", serif',
+        fontFamily: 'Verdana',
+        fontSize: '15px',
     },
     buttonHover: {
         backgroundColor: '#4B382A',

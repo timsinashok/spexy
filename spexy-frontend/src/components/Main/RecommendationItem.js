@@ -19,7 +19,7 @@ function Modal({ item, onClose }) {
         },
         modal: {
             background: "#fff",
-            borderRadius: "10px",
+            // borderRadius: "10px",
             padding: "20px",
             maxWidth: "600px",
             width: "90%",
@@ -32,6 +32,7 @@ function Modal({ item, onClose }) {
             alignItems: "center",
             marginBottom: "20px",
             position: "relative",
+            fontFamily: 'Verdana',
         },
         title: {
             flex: 1,
@@ -41,7 +42,7 @@ function Modal({ item, onClose }) {
         closeButton: {
             background: "#4B382A",
             color: "#fff",
-            border: "none",
+            border: "10px",
             padding: "10px 20px",
             borderRadius: "5px",
             cursor: "pointer",
@@ -67,10 +68,11 @@ function Modal({ item, onClose }) {
                         color: "#fff",
                         border: "none",
                         padding: "10px 20px",
-                        borderRadius: "5px",
+                        borderRadius: "15px",
                         cursor: "pointer",
                         marginTop: "15px",
                         fontSize: "16px",
+                        fontFamily: 'Verdana',
                     }}
                 >
                     View More Details 🔗
@@ -171,7 +173,7 @@ const styles = {
         textAlign: "center",
         backgroundColor: "#f9f9f9",
         transition: "transform 0.3s ease, box-shadow 0.3s ease",
-        fontFamily: '"Playfair Display", serif',
+        fontFamily: 'Verdana',
         cursor: "pointer",
     },
     hoverEffect: {
