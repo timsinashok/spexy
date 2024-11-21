@@ -18,7 +18,7 @@ const styles = {
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '20px 40px',
-        backgroundColor: '#f9f9f9',
+        backgroundColor: 'white',
         borderBottom: '2px solid #e0e0e0',
         boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
         position: 'sticky',
@@ -26,20 +26,9 @@ const styles = {
         zIndex: '1000',
     },
     title: {
-        height: '50px',
-    },
-    button: {
-        padding: '10px 20px',
-        fontSize: '16px',
-        fontWeight: '600',
-        backgroundColor: '#4B382A',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '20px',
-        cursor: 'pointer',
-        transition: 'background-color 0.3s ease',
+        height: '65px',
     },
     logo: {
-        height: '50px',
+        height: '65px',
     },
 };

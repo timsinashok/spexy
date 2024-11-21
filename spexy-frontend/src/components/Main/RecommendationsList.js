@@ -67,43 +67,15 @@ function RecommendationsList({ apiResponse }) {
         setFilteredRecommendations(filtered);
     }, [minPrice, maxPrice, recommendations]);
 
-
-//     return (
-//         <div>
-//             <h2>Recommended Glasses</h2>
-//             {apiResponse && (
-//                 <div style={{ marginBottom: '10px', fontWeight: 'bold' }}>
-//                     Detected Face Shape: {apiResponse}
-//                 </div>
-//             )}
-//             {loading && <p>Loading...</p>}
-//             {error && <p>{error}</p>}
-//             {!loading && !error && recommendations.length === 0 && (
-//                 <p>No recommendations available for this face shape.</p>
-//             )}
-//             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-//                 {!loading && !error && recommendations.map((item) => (
-//                     <div key={item._id} style={{ flex: '1 1 45%', boxSizing: 'border-box' }}>
-//                         <RecommendationItem item={item} />
-//                     </div>
-//                 ))}
-//             </div>
-//         </div>
-//     );
-// }
-
-// export default RecommendationsList;
-
-
     // Styling for scrollable recommendations container
     const styles = {
         container: {
-            padding: '20px',
+            padding: '30px',
             borderRadius: '8px',
-            backgroundColor: '#f1f0eb',
+            backgroundColor: 'transparent',
             maxWidth: '800px',
             margin: '20px auto',
-            fontFamily: '"Playfair Display", serif',
+            fontFamily: 'Verdana',
         },
         header: {
             fontSize: '2em',
@@ -118,7 +90,7 @@ function RecommendationsList({ apiResponse }) {
             textAlign: 'center',
         },
         recommendationsContainer: {
-            maxHeight: '600px',  // Set a fixed height for scrollable area
+            maxHeight: '430px',  // Set a fixed height for scrollable area
             overflowY: 'auto',   // Enable vertical scrolling
             padding: '10px',
             display: 'flex',
@@ -131,13 +103,13 @@ function RecommendationsList({ apiResponse }) {
 
     return (
         <div style={styles.container}>
-            <h2 style={styles.header}>Recommended Glasses</h2>
-            {apiResponse && (
+            <h2 style={styles.header}>Glasses for YOU</h2>
+            {/* {apiResponse && (
                 <div style={styles.faceShape}>Detected Face Shape: {apiResponse}</div>
-            )}
+            )} */}
     
             {/* Price Filter Controls */}
-            <div style={{ marginBottom: '20px' }}>
+            <div style={{ marginBottom: '20px', marginLeft: '60px',marginLeft: '60px',fontFamily: 'Verdana',}}>
                 <label>
                     Min Price:
                     <input 
