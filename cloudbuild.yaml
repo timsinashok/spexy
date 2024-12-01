@@ -1,23 +1,36 @@
 steps:
+  # Install dependencies and build React app
+  - name: 'node:14'
+    entrypoint: 'npm'
+    args: ['install']
+    dir: 'frontend'
+  - name: 'node:14'
+    entrypoint: 'npm'
+    args: ['run', 'build']
+    dir: 'frontend'
+
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/spexy:$COMMIT_SHA', '.']
+
   # Push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
+    args: ['push', 'gcr.io/$PROJECT_ID/spexy:$COMMIT_SHA']
+
   # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
     - 'run'
     - 'deploy'
-    - '$REPO_NAME'
+    - 'spexy'
     - '--image'
-    - 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
+    - 'gcr.io/$PROJECT_ID/spexy:$COMMIT_SHA'
     - '--region'
     - 'us-central1'
     - '--platform'
     - 'managed'
     - '--allow-unauthenticated'
+
 images:
-  - 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/spexy:$COMMIT_SHA'
