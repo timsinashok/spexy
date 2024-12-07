@@ -16,6 +16,7 @@ from fastapi.responses import JSONResponse
 # Load environment variables
 load_dotenv()
 mongodb_uri = os.getenv('MONGODB_URI')
+print(mongodb_uri)
 
 # Initialize FastAPI app
 app = FastAPI()
