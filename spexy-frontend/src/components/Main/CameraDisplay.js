@@ -151,7 +151,7 @@ function CameraDisplay({ setApiResponse, apiKey, imageUrl }) {
 
     // const backgroundUrl = 'http://127.0.0.1:9090';
     // const backgroundUrl = process.env.REACT_APP_BACKEND_URL;
-    const backgroundUrl = 'https://spexy-backend-159238452229.us-central1.run.app/'
+    const backgroundUrl = 'https://spexy-backend-159238452229.us-central1.run.app'
 
     const handleSubmit = async () => {
         if (!croppedImage) {
