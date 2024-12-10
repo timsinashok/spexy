@@ -155,7 +155,8 @@ function CameraDisplay({ setApiResponse, apiKey, imageUrl }) {
 
     const handleSubmit = async () => {
         if (!croppedImage) {
-            console.log("No image captured.");
+            // console.log("No image captured.");
+            alert("Capture an image first!");
             return;
         }
     
@@ -185,7 +186,10 @@ function CameraDisplay({ setApiResponse, apiKey, imageUrl }) {
                 console.log("Face shape detected: ", response.data.predictions[0].class);
                 setApiResponse(response.data.predictions[0].class);
             } else {
-                console.log("No face shape detected.");
+                // console.log("No face shape detected.");
+                alert("No face detected. Please try again!");
+                retakePicture()
+                
             }
         } catch (error) {
             console.error("Error:", error.response?.data?.detail || error.message);
