@@ -9,6 +9,7 @@ function MainPage() {
     const [imageUrl, setImageUrl] = useState(null); 
     const apiKey = process.env.REACT_APP_RoboflowAPI; // API key for the recommendation service
     console.log(imageUrl)
+    console.log(apiResponse)
 
     // Styles for the main page
     const styles = {

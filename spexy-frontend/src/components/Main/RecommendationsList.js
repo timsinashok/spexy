@@ -27,17 +27,21 @@ function RecommendationsList({ apiResponse, setImageUrl }) {
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(500); // Default maximum price
 
-    useEffect(() => {
-        // Function to fetch glasses for each recommended shape
-        const fetchAllRecommendations = async () => {
-            try {
-                setLoading(true);
-                const storeId = "673978b6a133fa112e837e70"; // Replace with the actual store ID if applicable
+    const backendUrl = 'http://127.0.0.1:9090'; // or use process.env.BACKEND_URL if you're reading from environment variables
+    // const backendUrl = process.env.BACKEND_URL;
+useEffect(() => {
+    // Function to fetch glasses for each recommended shape
+    const fetchAllRecommendations = async () => {
+        try {
+            setLoading(true);
+            const storeId = "673978b6a133fa112e837e70"; // Replace with the actual store ID if applicable
 
-                // Fetch all recommendations concurrently using Promise.all
-                const requests = faceShapes.map(shape =>
-                    axios.get(`http://127.0.0.1:8000/stores/${storeId}/glasses/${shape}`)
-                );
+            // Fetch all recommendations concurrently using Promise.all
+            const requests = faceShapes.map(shape =>
+                axios.get(
+                    `${backendUrl}/stores/${storeId}/glasses/${shape}` // Use the backendUrl variable
+                )
+            );
                 
                 // Wait for all requests to complete
                 const responses = await Promise.all(requests);
