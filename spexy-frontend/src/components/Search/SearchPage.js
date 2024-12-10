@@ -33,14 +33,15 @@ function SearchPage() {
     return (
         <div style={styles.container}>
             <div style={styles.card}>
-            <img src="logo.png" alt="Spexy Logo" />
-                <input
-                    type="text"
-                    placeholder="Store Name Here"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    style={styles.input}
-                />
+            // <img src="logo.png" alt="Spexy Logo" />
+            //     <input
+            //         type="text"
+            //         placeholder="Store Name Here"
+            //         value={searchTerm}
+            //         onChange={(e) => setSearchTerm(e.target.value)}
+            //         style={styles.input}
+            //     />
+            <img src={`glasses-unscreen.gif`} alt="Spexy gif" style={{ width: '60%', maxHeight: '100px', objectFit: 'cover' }}/>
                 <div style={styles.buttonContainer}>
                     <Link to="/store" style={{ textDecoration: 'none' }}>
                         <button
@@ -54,17 +55,30 @@ function SearchPage() {
                             I'm feeling Lucky
                         </button>
                     </Link>
+                    
+                    <Link to="/store" style={{ textDecoration: 'none' }}>
                     <button
                         style={{
                             ...styles.button,
-                            ...(hoveredButton === 'search' && styles.buttonHover),
+                            ...(hoveredButton === 'eyebuydirect' && styles.buttonHover),
                         }}
-                        onMouseEnter={() => setHoveredButton('search')}
+                        onMouseEnter={() => setHoveredButton('eyebuydirect')}
                         onMouseLeave={() => setHoveredButton(null)}
-                        onClick={handleSearch}
                     >
-                        Search
+                        Eyebuydirect
                     </button>
+                </Link>
+                    // <button
+                    //     style={{
+                    //         ...styles.button,
+                    //         ...(hoveredButton === 'search' && styles.buttonHover),
+                    //     }}
+                    //     onMouseEnter={() => setHoveredButton('search')}
+                    //     onMouseLeave={() => setHoveredButton(null)}
+                    //     onClick={handleSearch}
+                    // >
+                    //     Search
+                    // </button>
                     {/* {isSearchValid && <Link to="/store"></Link>} */}
                 </div>
                 <Link to="/login" style={styles.adminLink}>Administrator Login</Link>
