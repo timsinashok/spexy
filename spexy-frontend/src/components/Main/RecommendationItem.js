@@ -90,7 +90,7 @@ function RecommendationItem({ item, setImageUrl }) {
 
     // const backendUrl = 'http://127.0.0.1:9090'; 
     // const backendUrl = process.env.BACKEND_URL;
-    const backgroundUrl = 'https://spexy-backend-159238452229.us-central1.run.app'
+    const backendUrl = 'https://spexy-backend-159238452229.us-central1.run.app'
 
 
     const handleTryClick = async (link) => {
