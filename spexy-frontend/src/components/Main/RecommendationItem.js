@@ -88,11 +88,13 @@ function RecommendationItem({ item, setImageUrl }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [fetchedImage, setFetchedImage] = useState(null);
 
-    // Fetch image from API and handle further processing
+    // const backendUrl = 'http://127.0.0.1:9090'; 
+    const backendUrl = process.env.BACKEND_URL;
+
     const handleTryClick = async (link) => {
         try {
             const response = await axios.get(
-                `http://127.0.0.1:8000/get_image/?glass_link=${encodeURIComponent(link)}`
+                `${backendUrl}/get_image/?glass_link=${encodeURIComponent(link)}`
             );
             if (response.status === 200) {
                 setImageUrl(response.data.image_url); // Update imageUrl in MainPage
