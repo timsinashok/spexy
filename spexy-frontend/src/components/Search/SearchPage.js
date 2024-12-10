@@ -33,14 +33,7 @@ function SearchPage() {
     return (
         <div style={styles.container}>
             <div style={styles.card}>
-            // <img src="logo.png" alt="Spexy Logo" />
-            //     <input
-            //         type="text"
-            //         placeholder="Store Name Here"
-            //         value={searchTerm}
-            //         onChange={(e) => setSearchTerm(e.target.value)}
-            //         style={styles.input}
-            //     />
+            <img src="logo.png" alt="Spexy Logo" />
             <img src={`glasses-unscreen.gif`} alt="Spexy gif" style={{ width: '60%', maxHeight: '100px', objectFit: 'cover' }}/>
                 <div style={styles.buttonContainer}>
                     <Link to="/store" style={{ textDecoration: 'none' }}>
@@ -81,7 +74,6 @@ function SearchPage() {
                     // </button>
                     {/* {isSearchValid && <Link to="/store"></Link>} */}
                 </div>
-                <Link to="/login" style={styles.adminLink}>Administrator Login</Link>
             </div>
         </div>
     );
