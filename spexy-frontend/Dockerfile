@@ -54,8 +54,8 @@ RUN npm install
 COPY . .
 
 # Set the REACT_APP_BACKEND_URL environment variable before building the React app
-ARG BACKEND_URL
-ENV BACKEND_URL=$REACT_APP_BACKEND_URL
+ARG REACT_APP_BACKEND_URL
+ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL
 
 # Build application
 RUN npm run build
@@ -100,4 +100,4 @@ RUN printf 'server {\n\
 # CMD sh -c ": \${PORT:=8080} && envsubst '\$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
 
 # Use shell to substitute PORT value in nginx.conf
-CMD sh -c "envsubst '\$PORT \$BACKEND_URL' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+CMD sh -c "envsubst '\$PORT \$REACT_APP_BACKEND_URL' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
