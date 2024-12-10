@@ -3,19 +3,18 @@ import { Link } from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
-// Component for the search page
 function SearchPage() {
-    const [searchTerm, setSearchTerm] = useState('');
-    // const [isSearchValid, setIsSearchValid] = useState(false);
     const [hoveredButton, setHoveredButton] = useState(null);
-    const navigate = useNavigate();
-
 
     return (
         <div style={styles.container}>
             <div style={styles.card}>
-            <img src="logo.png" alt="Spexy Logo" />
-            <img src="glasses-unscreen.gif" alt="Spexy gif" style={{ width: '60%', maxHeight: '100px', objectFit: 'cover' }}/>
+                <img src="/logo.png" alt="Spexy Logo" />
+                <img
+                    src="/glasses-unscreen.gif"
+                    alt="Spexy gif"
+                    style={{ width: '60%', maxHeight: '100px', objectFit: 'cover' }}
+                />
                 <div style={styles.buttonContainer}>
                     <Link to="/store" style={{ textDecoration: 'none' }}>
                         <button
@@ -29,31 +28,19 @@ function SearchPage() {
                             I'm feeling Lucky
                         </button>
                     </Link>
-                    
+
                     <Link to="/store" style={{ textDecoration: 'none' }}>
-                    <button
-                        style={{
-                            ...styles.button,
-                            ...(hoveredButton === 'eyebuydirect' && styles.buttonHover),
-                        }}
-                        onMouseEnter={() => setHoveredButton('eyebuydirect')}
-                        onMouseLeave={() => setHoveredButton(null)}
-                    >
-                        Eyebuydirect
-                    </button>
-                </Link>
-                    // <button
-                    //     style={{
-                    //         ...styles.button,
-                    //         ...(hoveredButton === 'search' && styles.buttonHover),
-                    //     }}
-                    //     onMouseEnter={() => setHoveredButton('search')}
-                    //     onMouseLeave={() => setHoveredButton(null)}
-                    //     onClick={handleSearch}
-                    // >
-                    //     Search
-                    // </button>
-                    {/* {isSearchValid && <Link to="/store"></Link>} */}
+                        <button
+                            style={{
+                                ...styles.button,
+                                ...(hoveredButton === 'eyebuydirect' && styles.buttonHover),
+                            }}
+                            onMouseEnter={() => setHoveredButton('eyebuydirect')}
+                            onMouseLeave={() => setHoveredButton(null)}
+                        >
+                            Eyebuydirect
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>
@@ -61,7 +48,6 @@ function SearchPage() {
 }
 
 export default SearchPage;
-
 // Local styles for the SearchPage component
 const styles = {
     container: {
