@@ -150,7 +150,8 @@ function CameraDisplay({ setApiResponse, apiKey, imageUrl }) {
     // };
 
     // const backgroundUrl = 'http://127.0.0.1:9090';
-    const backgroundUrl =  process.env.BACKEND_URL
+    const backgroundUrl = process.env.REACT_APP_BACKEND_URL;
+
     const handleSubmit = async () => {
         if (!croppedImage) {
             console.log("No image captured.");
