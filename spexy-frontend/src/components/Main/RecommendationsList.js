@@ -110,9 +110,9 @@ useEffect(() => {
     return (
         <div style={styles.container}>
             <h2 style={styles.header}>Glasses for YOU</h2>
-            {/* {apiResponse && (
-                <div style={styles.faceShape}>Detected Face Shape: {apiResponse}</div>
-            )} */}
+             {apiResponse && (
+                <div style={styles.faceShape}>You have a beautiful {apiResponse} face.</div>
+            )} 
     
             {/* Price Filter Controls */}
             <div style={{ marginBottom: '20px', marginLeft: '60px',marginLeft: '60px',fontFamily: 'Verdana',}}>
@@ -136,10 +136,10 @@ useEffect(() => {
                 </label>
             </div>
 
-            {loading && <p>Loading...</p>}
+            {loading && <p>Cooking your recommend.......</p>}
             {error && <p>{error}</p>}
             {!loading && !error && recommendations.length === 0 && (
-                <p>No recommendations available for this face shape.</p>
+                <p>No recommendations are available for this face shape.</p>
             )}
             <div style={styles.recommendationsContainer}>
                 {!loading && !error && filteredRecommendations.map((item) => (
