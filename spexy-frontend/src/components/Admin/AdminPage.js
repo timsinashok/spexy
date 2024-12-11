@@ -97,9 +97,6 @@ function GlassesList() {
                         <a href={glass.Link} target="_blank" rel="noopener noreferrer" style={styles.link}>
                             View the glass
                         </a>
-                        <button style={styles.deleteButton} onClick={() => handleDelete(glass["_id"])}>
-                            ✖ {/* Minimal delete icon */}
-                        </button>
                     </div>
                 ))}
             </div>
