@@ -62,18 +62,7 @@ function LoginForm() {
                     style={styles.input}
                 />
                 <div style={styles.buttonContainer}>
-                    <Link to="/reset" style={{ textDecoration: 'none' }}>
-                        <button
-                            style={{
-                                ...styles.button,
-                                ...(hoveredButton === 'forgot' && styles.buttonHover),
-                            }}
-                            onMouseEnter={() => setHoveredButton('forgot')}
-                            onMouseLeave={() => setHoveredButton(null)}
-                        >
-                            Forgot Password?
-                        </button>
-                    </Link>
+                    
                     <button
                         style={{
                             ...styles.button,
