@@ -46,7 +46,10 @@ function LoginForm() {
     return (
         <div style={styles.container}>
             <div style={styles.card}>
-            <img src="logo.png" alt="Spexy Logo" style={styles.navLeft} />
+        <Link to="/">
+        <img src="logo.png" alt="Spexy Logo" style={styles.navLeft} />
+        </Link>
+
                 <input
                     type="text"
                     placeholder="Username"
