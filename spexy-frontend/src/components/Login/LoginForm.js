@@ -86,9 +86,6 @@ function LoginForm() {
                         Login
                     </button>
                 </div>
-                // <Link to="/signup" style={styles.registerLink}>
-                //     New User? Sign up here
-                // </Link>
             </div>
         </div>
     );
