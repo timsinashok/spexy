@@ -50,6 +50,9 @@ function LoginForm() {
         <img src="logo.png" alt="Spexy Logo" style={styles.navLeft} />
         </Link>
 
+        {error && <div style={styles.errorMessage}>{error}</div>}  
+
+
                 <input
                     type="text"
                     placeholder="Username"
@@ -153,4 +156,13 @@ const styles = {
         textDecoration: 'underline',
         fontFamily: 'Verdana'
     },
+    errorMessage: {
+    color: '#ff0000',
+    backgroundColor: '#ffebee',
+    padding: '10px',
+    borderRadius: '5px',
+    marginBottom: '15px',
+    fontSize: '14px',
+    border: '1px solid #ffcdd2',
+},
 };
