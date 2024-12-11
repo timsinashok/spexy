@@ -43,6 +43,7 @@ function SearchPage() {
                     </Link>
                 </div>
             </div>
+                                <Link to="/login" style={styles.adminLink}>Administrator Login</Link>
         </div>
     );
 }
