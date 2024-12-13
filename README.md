@@ -1,6 +1,6 @@
 # Spexy
 
-Spexy is an intelligent platform that recommends eyeglasses based on the shape of the user's face. This repository contains the codebase for both the backend and frontend of Spexy, allowing seamless functionality from user input to eyeglass recommendations.
+[Spexy](https://spexy-frontend-159238452229.us-central1.run.app/) is an intelligent platform that recommends eyeglasses based on the shape of the user's face. This repository contains the codebase for both the backend and frontend of Spexy, allowing seamless functionality from user input to eyeglass recommendations.
 
 The frontend of the app is built using `React` framework and backend is built using `FastAPI`. 
 
