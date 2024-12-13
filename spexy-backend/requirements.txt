@@ -5,11 +5,11 @@ fastapi
 uvicorn
 certifi
 requests
-BeautifulSoup4
+beautifulsoup4
 selenium
-<<<<<<< HEAD
 python-multipart
-=======
-python-multipart
-inference-sdk
->>>>>>> 299df58 (updated with bug fixes and api endpoint)
+
+pydantic
+urllib3
+httpx
+roboflow
