@@ -45,8 +45,19 @@ cd Final_Project_PPDS
 
    ```bash
    python -m venv env
-   source env/bin/activate
    ```
+ To activate the virtual environment use one of the following commands based on your OS: 
+ 
+  On Unix-based systems use:
+  ```bash
+source env/bin/activate
+  ```
+
+On Windows systems use:
+  ```bash
+env\Scripts\activate
+  ```
+   
 
 2. Install the required packages:
 
