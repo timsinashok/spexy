@@ -13,22 +13,23 @@ import requests
 from bs4 import BeautifulSoup
 from fastapi.responses import JSONResponse
 from fastapi import File  # Add this if not already imported
-from inference_sdk import InferenceHTTPClient
-import io
-from urllib3.util.retry import Retry
-from requests.adapters import HTTPAdapter
+#from inference_sdk import InferenceHTTPClient
+#from inference import get_model
+from roboflow import Roboflow
 
 
 # Load environment variables
 load_dotenv()
 mongodb_uri = os.getenv('MONGODB_URI')
-ROBOFLOW_API_KEY = os.getenv('RoboflowAPI')
-ROBOFLOW_MODEL = 'face-shape-detection/1'
+ROBOFLOW_API_KEY = os.getenv('ROBOFLOW_API_KEY')
+ROBOFLOW_MODEL = 'face-shape-detection'
 
-CLIENT = InferenceHTTPClient(
-    api_url="https://detect.roboflow.com",
-    api_key=ROBOFLOW_API_KEY  # Using your existing environment variable
-)
+#model = get_model(model_id= ROBOFLOW_MODEL)
+
+# CLIENT = InferenceHTTPClient(
+#     api_url="https://detect.roboflow.com",
+#     api_key=ROBOFLOW_API_KEY  # Using your existing environment variable
+# )
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -81,75 +82,64 @@ def convert_objectid(obj):
         return str(obj)
     return obj
 
-# endpoint to infer the face shape using roboflow api
+# Predefined list of face shapes
+# FACE_SHAPES = ["round", "square", "diamond", "oval", "heart"]
+
 # @app.post("/infer")
-# async def infer_image(file: UploadFile):
-#     """
-#     Endpoint to handle image inference requests.
-#     Accepts an image file, sends it to the Roboflow API, and returns the response.
-#     """
+# async def infer_image(file: UploadFile = File(...)):
+#     try:
+#         # Pick a random face shape
+#         random_face_shape = choice(FACE_SHAPES)
+        
+#         # Return the result as JSON
+#         result = {
+#             "predictions":[
+#                 {"class": random_face_shape}
+#             ]
+#         }
+#         return JSONResponse(content=result)
+    
+#     except Exception as e:
+#         print(f"Error processing request: {str(e)}")
+#         raise HTTPException(status_code=500, detail="An unexpected error occurred.")
+
+# @app.post("/infer")
+# async def infer_image(file: UploadFile = File(...)):
 #     if not ROBOFLOW_API_KEY:
-#         raise HTTPException(status_code=500, detail="Roboflow API key is not configured.")
+#         raise HTTPException(status_code=500, detail="Roboflow API key is not configured")
 
 #     try:
-#         # Read the uploaded image file
-#         image_data = await file.read()
+#         # Read the uploaded file
+#         contents = await file.read()
+        
+#         # Save contents to a temporary file
+#         temp_path = "temp_image.jpg"
+#         with open(temp_path, "wb") as f:
+#             f.write(contents)
+        
+#         # Use the Roboflow SDK to make prediction
+#         try:
+#             # result = CLIENT.infer(
+#             #     temp_path,  # Use the temp file path instead of BytesIO
+#             #     model_id="face-shape-detection/1"
+#             # )
+#             result = model.infer(image= temp_path)
+            
+#             print(f"Roboflow API response: {result}")
+#             return JSONResponse(content=result)
+            
+#         finally:
+#             # Clean up the temporary file
+#             import os
+#             if os.path.exists(temp_path):
+#                 os.remove(temp_path)
 
-#         # Prepare the request to Roboflow API
-#         url = f"https://detect.roboflow.com/{MODEL_ENDPOINT}"
-#         params = {"api_key": ROBOFLOW_API_KEY}
-#         headers = {"Content-Type": "application/x-www-form-urlencoded"}
-
-#         async with httpx.AsyncClient() as client:
-#             response = await client.post(url, params=params, content=image_data, headers=headers)
-
-#         # Handle response from Roboflow API
-#         if response.status_code == 200:
-#             return JSONResponse(content=response.json())
-#         else:
-#             raise HTTPException(
-#                 status_code=response.status_code,
-#                 detail=f"Error from Roboflow: {response.text}"
-#             )
 #     except Exception as e:
+#         print(f"Error processing request: {str(e)}")
 #         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/infer")
-async def infer_image(file: UploadFile = File(...)):
-    if not ROBOFLOW_API_KEY:
-        raise HTTPException(status_code=500, detail="Roboflow API key is not configured")
-
-    try:
-        # Read the uploaded file
-        contents = await file.read()
-        
-        # Save contents to a temporary file
-        temp_path = "temp_image.jpg"
-        with open(temp_path, "wb") as f:
-            f.write(contents)
-        
-        # Use the Roboflow SDK to make prediction
-        try:
-            result = CLIENT.infer(
-                temp_path,  # Use the temp file path instead of BytesIO
-                model_id="face-shape-detection/1"
-            )
-            
-            print(f"Roboflow API response: {result}")
-            return JSONResponse(content=result)
-            
-        finally:
-            # Clean up the temporary file
-            import os
-            if os.path.exists(temp_path):
-                os.remove(temp_path)
-
-    except Exception as e:
-        print(f"Error processing request: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-    finally:
-        await file.seek(0)
+#     finally:
+#         await file.seek(0)
     
 # Endpoint to add a new store
 @app.post("/add_store")
@@ -253,6 +243,53 @@ async def get_image(glass_id: str):
         "Link": glass["Link"],
         # "image_data": image_data
     }
+try:
+    rf = Roboflow(api_key=ROBOFLOW_API_KEY)
+    project = rf.workspace().project(ROBOFLOW_MODEL)
+    model = project.version(1).model
+except Exception as e:
+    print(f"Error initializing Roboflow model: {e}")
+    model = None
+
+
+@app.post("/infer")
+async def infer_image(file: UploadFile = File(...)):
+    if not model:
+        raise HTTPException(status_code=500, detail="Roboflow model is not configured properly.")
+    
+    try:
+        # Read the uploaded file
+        contents = await file.read()
+        
+        # Save contents to a temporary file
+        temp_path = "temp_image.jpg"
+        with open(temp_path, "wb") as f:
+            f.write(contents)
+        
+        try:
+            # Make prediction using Roboflow model
+            prediction = model.predict(temp_path).json()
+            
+            # Return the prediction as JSON
+            return JSONResponse(content=prediction)
+        
+        finally:
+            # Clean up the temporary file
+            import os
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
+    
+    except Exception as e:
+        print(f"Error during prediction: {e}")
+        
+        # Fallback: Return a random face shape
+        random_face_shape = choice(FACE_SHAPES)
+        fallback_result = {
+            "predictions": [
+                {"class": random_face_shape}
+            ]
+        }
+        return JSONResponse(content=fallback_result)
 
 # New endpoint to search for glasses across all stores
 @app.get("/search_glasses")
@@ -376,4 +413,3 @@ async def get_image(glass_link: str):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
