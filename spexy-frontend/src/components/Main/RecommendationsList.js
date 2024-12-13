@@ -27,8 +27,8 @@ function RecommendationsList({ apiResponse, setImageUrl }) {
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(500); // Default maximum price
 
-    const backendUrl = 'http://127.0.0.1:9090'; // or use process.env.BACKEND_URL if you're reading from environment variables
-    // const backendUrl = process.env.BACKEND_URL;
+    const backendUrl = 'https://spexy-backend-159238452229.us-central1.run.app'
+
 useEffect(() => {
     // Function to fetch glasses for each recommended shape
     const fetchAllRecommendations = async () => {
