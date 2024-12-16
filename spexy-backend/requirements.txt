@@ -13,3 +13,6 @@ pydantic
 urllib3
 httpx
 roboflow
+BeautifulSoup4
+selenium
+

@@ -21,6 +21,7 @@ from roboflow import Roboflow
 # Load environment variables
 load_dotenv()
 mongodb_uri = os.getenv('MONGODB_URI')
+
 ROBOFLOW_API_KEY = os.getenv('ROBOFLOW_API_KEY')
 ROBOFLOW_MODEL = 'face-shape-detection'
 
@@ -30,6 +31,9 @@ ROBOFLOW_MODEL = 'face-shape-detection'
 #     api_url="https://detect.roboflow.com",
 #     api_key=ROBOFLOW_API_KEY  # Using your existing environment variable
 # )
+=======
+print(mongodb_uri)
+
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -82,64 +86,6 @@ def convert_objectid(obj):
         return str(obj)
     return obj
 
-# Predefined list of face shapes
-# FACE_SHAPES = ["round", "square", "diamond", "oval", "heart"]
-
-# @app.post("/infer")
-# async def infer_image(file: UploadFile = File(...)):
-#     try:
-#         # Pick a random face shape
-#         random_face_shape = choice(FACE_SHAPES)
-        
-#         # Return the result as JSON
-#         result = {
-#             "predictions":[
-#                 {"class": random_face_shape}
-#             ]
-#         }
-#         return JSONResponse(content=result)
-    
-#     except Exception as e:
-#         print(f"Error processing request: {str(e)}")
-#         raise HTTPException(status_code=500, detail="An unexpected error occurred.")
-
-# @app.post("/infer")
-# async def infer_image(file: UploadFile = File(...)):
-#     if not ROBOFLOW_API_KEY:
-#         raise HTTPException(status_code=500, detail="Roboflow API key is not configured")
-
-#     try:
-#         # Read the uploaded file
-#         contents = await file.read()
-        
-#         # Save contents to a temporary file
-#         temp_path = "temp_image.jpg"
-#         with open(temp_path, "wb") as f:
-#             f.write(contents)
-        
-#         # Use the Roboflow SDK to make prediction
-#         try:
-#             # result = CLIENT.infer(
-#             #     temp_path,  # Use the temp file path instead of BytesIO
-#             #     model_id="face-shape-detection/1"
-#             # )
-#             result = model.infer(image= temp_path)
-            
-#             print(f"Roboflow API response: {result}")
-#             return JSONResponse(content=result)
-            
-#         finally:
-#             # Clean up the temporary file
-#             import os
-#             if os.path.exists(temp_path):
-#                 os.remove(temp_path)
-
-#     except Exception as e:
-#         print(f"Error processing request: {str(e)}")
-#         raise HTTPException(status_code=500, detail=str(e))
-
-#     finally:
-#         await file.seek(0)
     
 # Endpoint to add a new store
 @app.post("/add_store")
