@@ -3,43 +3,17 @@ import { Link } from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
-// Component for the search page
 function SearchPage() {
-    const [searchTerm, setSearchTerm] = useState('');
-    // const [isSearchValid, setIsSearchValid] = useState(false);
     const [hoveredButton, setHoveredButton] = useState(null);
-    const navigate = useNavigate();
-
-    const handleSearch = async () => {
-        try {
-            console.log('searching for the store');
-            const response = await axios.get(`http://127.0.0.1:8000/stores/${searchTerm}/glasses/`);
-            if (response.data) {
-                // console.log('Store found in the database');
-                // setIsSearchValid(true);
-                navigate('/store');
-            } else {
-                // console.log('Store not found');
-                alert('Store not found in the database');
-                // setIsSearchValid(false);
-            }
-        } catch (error) {
-            // console.log('Store not found in the database');
-            alert('An error occurred while searching for the store');
-            // setIsSearchValid(false);
-        }
-    };
 
     return (
         <div style={styles.container}>
             <div style={styles.card}>
-            <img src="logo.png" alt="Spexy Logo" />
-                <input
-                    type="text"
-                    placeholder="Store Name Here"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    style={styles.input}
+                <img src="/logo.png" alt="Spexy Logo" />
+                <img
+                    src="/glasses-unscreen.gif"
+                    alt="Spexy gif"
+                    style={{ width: '60%', maxHeight: '100px', objectFit: 'cover' }}
                 />
                 <div style={styles.buttonContainer}>
                     <Link to="/store" style={{ textDecoration: 'none' }}>
@@ -54,27 +28,27 @@ function SearchPage() {
                             I'm feeling Lucky
                         </button>
                     </Link>
-                    <button
-                        style={{
-                            ...styles.button,
-                            ...(hoveredButton === 'search' && styles.buttonHover),
-                        }}
-                        onMouseEnter={() => setHoveredButton('search')}
-                        onMouseLeave={() => setHoveredButton(null)}
-                        onClick={handleSearch}
-                    >
-                        Search
-                    </button>
-                    {/* {isSearchValid && <Link to="/store"></Link>} */}
+
+                    <Link to="/store" style={{ textDecoration: 'none' }}>
+                        <button
+                            style={{
+                                ...styles.button,
+                                ...(hoveredButton === 'eyebuydirect' && styles.buttonHover),
+                            }}
+                            onMouseEnter={() => setHoveredButton('eyebuydirect')}
+                            onMouseLeave={() => setHoveredButton(null)}
+                        >
+                            Eyebuydirect
+                        </button>
+                    </Link>
                 </div>
-                <Link to="/login" style={styles.adminLink}>Administrator Login</Link>
             </div>
+                                <Link to="/login" style={styles.adminLink}>Administrator Login</Link>
         </div>
     );
 }
 
 export default SearchPage;
-
 // Local styles for the SearchPage component
 const styles = {
     container: {

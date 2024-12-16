@@ -1,29 +1,44 @@
-# Use an official Node.js runtime as a parent image
-FROM node:14
 
-# Set the working directory in the container
+# Build stage
+FROM node:16-alpine as builder
+
+# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package files
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
+# Copy all frontend files
 COPY . .
 
-# Build the React app
+# Build application
 RUN npm run build
 
-# Use an official Nginx image to serve the built files
+# Debugging: List files in the /app directory to verify build
+RUN ls -al /app
+
+# Runtime stage
 FROM nginx:alpine
 
-# Copy the built files from the previous stage
-COPY --from=0 /app/build /usr/share/nginx/html
+# Set default port
+ENV PORT=8080
 
-# Expose port 80
-EXPOSE 80
+# Copy built files from builder (adjust path if necessary)
+COPY --from=builder /app/build /usr/share/nginx/html
 
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Create nginx.conf template
+RUN printf 'server {\n\
+    listen $PORT;\n\
+    location / {\n\
+        root /usr/share/nginx/html;\n\
+        index index.html index.htm;\n\
+        try_files $uri $uri/ /index.html;\n\
+    }\n\
+}\n' > /etc/nginx/conf.d/default.conf.template
+
+# Substitute PORT and start Nginx
+CMD sh -c ": \${PORT:=8080} && envsubst '\$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+

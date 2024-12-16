@@ -1,6 +1,6 @@
 # Spexy
 
-Spexy is an intelligent platform that recommends eyeglasses based on the shape of the user's face. This repository contains the codebase for both the backend and frontend of Spexy, allowing seamless functionality from user input to eyeglass recommendations.
+[Spexy](https://spexy-frontend-159238452229.us-central1.run.app/) is an intelligent platform that recommends eyeglasses based on the shape of the user's face. This repository contains the codebase for both the backend and frontend of Spexy, allowing seamless functionality from user input to eyeglass recommendations.
 
 The frontend of the app is built using `React` framework and backend is built using `FastAPI`. 
 
@@ -45,8 +45,19 @@ cd Final_Project_PPDS
 
    ```bash
    python -m venv env
-   source env/bin/activate
    ```
+ To activate the virtual environment use one of the following commands based on your OS: 
+ 
+  On Unix-based systems use:
+  ```bash
+source env/bin/activate
+  ```
+
+On Windows systems use:
+  ```bash
+env\Scripts\activate
+  ```
+   
 
 2. Install the required packages:
 

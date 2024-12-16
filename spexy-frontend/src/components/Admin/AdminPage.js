@@ -12,7 +12,7 @@ function GlassesList() {
     useEffect(() => {
         const fetchGlasses = async () => {
             try {
-                const response = await axios.get("http://127.0.0.1:8000/stores/Eye%20Buy%20Direct/glasses");
+                const response = await axios.get("https://spexy-backend-159238452229.us-central1.run.app/stores/Eye%20Buy%20Direct/glasses");
                 setGlasses(response.data); // Set fetched glasses data
                 setLoading(false); // Stop loading state
             } catch (error) {
@@ -97,9 +97,6 @@ function GlassesList() {
                         <a href={glass.Link} target="_blank" rel="noopener noreferrer" style={styles.link}>
                             View the glass
                         </a>
-                        <button style={styles.deleteButton} onClick={() => handleDelete(glass["_id"])}>
-                            ✖ {/* Minimal delete icon */}
-                        </button>
                     </div>
                 ))}
             </div>

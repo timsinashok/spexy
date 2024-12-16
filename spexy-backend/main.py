@@ -1,7 +1,7 @@
 import pymongo
 from dotenv import load_dotenv
 import os
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile
 from pydantic import BaseModel
 from typing import List, Optional
 from bson import ObjectId
@@ -12,11 +12,28 @@ from fastapi.middleware.cors import CORSMiddleware
 import requests
 from bs4 import BeautifulSoup
 from fastapi.responses import JSONResponse
+from fastapi import File  # Add this if not already imported
+#from inference_sdk import InferenceHTTPClient
+#from inference import get_model
+from roboflow import Roboflow
+
 
 # Load environment variables
 load_dotenv()
 mongodb_uri = os.getenv('MONGODB_URI')
+
+ROBOFLOW_API_KEY = os.getenv('ROBOFLOW_API_KEY')
+ROBOFLOW_MODEL = 'face-shape-detection'
+
+#model = get_model(model_id= ROBOFLOW_MODEL)
+
+# CLIENT = InferenceHTTPClient(
+#     api_url="https://detect.roboflow.com",
+#     api_key=ROBOFLOW_API_KEY  # Using your existing environment variable
+# )
+=======
 print(mongodb_uri)
+
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -69,6 +86,7 @@ def convert_objectid(obj):
         return str(obj)
     return obj
 
+    
 # Endpoint to add a new store
 @app.post("/add_store")
 async def add_store(store: Store):
@@ -171,6 +189,53 @@ async def get_image(glass_id: str):
         "Link": glass["Link"],
         # "image_data": image_data
     }
+try:
+    rf = Roboflow(api_key=ROBOFLOW_API_KEY)
+    project = rf.workspace().project(ROBOFLOW_MODEL)
+    model = project.version(1).model
+except Exception as e:
+    print(f"Error initializing Roboflow model: {e}")
+    model = None
+
+
+@app.post("/infer")
+async def infer_image(file: UploadFile = File(...)):
+    if not model:
+        raise HTTPException(status_code=500, detail="Roboflow model is not configured properly.")
+    
+    try:
+        # Read the uploaded file
+        contents = await file.read()
+        
+        # Save contents to a temporary file
+        temp_path = "temp_image.jpg"
+        with open(temp_path, "wb") as f:
+            f.write(contents)
+        
+        try:
+            # Make prediction using Roboflow model
+            prediction = model.predict(temp_path).json()
+            
+            # Return the prediction as JSON
+            return JSONResponse(content=prediction)
+        
+        finally:
+            # Clean up the temporary file
+            import os
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
+    
+    except Exception as e:
+        print(f"Error during prediction: {e}")
+        
+        # Fallback: Return a random face shape
+        random_face_shape = choice(FACE_SHAPES)
+        fallback_result = {
+            "predictions": [
+                {"class": random_face_shape}
+            ]
+        }
+        return JSONResponse(content=fallback_result)
 
 # New endpoint to search for glasses across all stores
 @app.get("/search_glasses")
@@ -294,4 +359,3 @@ async def get_image(glass_link: str):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-

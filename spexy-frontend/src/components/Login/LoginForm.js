@@ -46,7 +46,13 @@ function LoginForm() {
     return (
         <div style={styles.container}>
             <div style={styles.card}>
-            <img src="logo.png" alt="Spexy Logo" style={styles.navLeft} />
+        <Link to="/">
+        <img src="logo.png" alt="Spexy Logo" style={styles.navLeft} />
+        </Link>
+
+        {error && <div style={styles.errorMessage}>{error}</div>}  
+
+
                 <input
                     type="text"
                     placeholder="Username"
@@ -62,18 +68,7 @@ function LoginForm() {
                     style={styles.input}
                 />
                 <div style={styles.buttonContainer}>
-                    <Link to="/reset" style={{ textDecoration: 'none' }}>
-                        <button
-                            style={{
-                                ...styles.button,
-                                ...(hoveredButton === 'forgot' && styles.buttonHover),
-                            }}
-                            onMouseEnter={() => setHoveredButton('forgot')}
-                            onMouseLeave={() => setHoveredButton(null)}
-                        >
-                            Forgot Password?
-                        </button>
-                    </Link>
+                    
                     <button
                         style={{
                             ...styles.button,
@@ -86,9 +81,6 @@ function LoginForm() {
                         Login
                     </button>
                 </div>
-                <Link to="/signup" style={styles.registerLink}>
-                    New User? Sign up here
-                </Link>
             </div>
         </div>
     );
@@ -164,4 +156,13 @@ const styles = {
         textDecoration: 'underline',
         fontFamily: 'Verdana'
     },
+    errorMessage: {
+    color: '#ff0000',
+    backgroundColor: '#ffebee',
+    padding: '10px',
+    borderRadius: '5px',
+    marginBottom: '15px',
+    fontSize: '14px',
+    border: '1px solid #ffcdd2',
+},
 };

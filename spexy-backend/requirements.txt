@@ -5,5 +5,14 @@ fastapi
 uvicorn
 certifi
 requests
+beautifulsoup4
+selenium
+python-multipart
+
+pydantic
+urllib3
+httpx
+roboflow
 BeautifulSoup4
 selenium
+

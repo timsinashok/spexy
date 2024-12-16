@@ -83,30 +83,115 @@ function CameraDisplay({ setApiResponse, apiKey, imageUrl }) {
         setIsCameraOn(true);
     };
 
+    // const handleSubmit = async () => {
+    //     if (!croppedImage) {
+    //         console.log("No image captured.");
+    //         return;
+    //     }
+
+        // try {
+        //     const id = process.env.REACT_APP_RoboflowAPI;
+        //     const response = await axios.post(
+        //         "https://detect.roboflow.com/face-shape-detection/1",
+        //         croppedImage, // Submit the cropped image
+        //         {
+        //             params: { api_key: id },
+        //             headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        //         }
+        //     );
+        //     if (response.data.predictions && response.data.predictions.length > 0) {
+        //         console.log("Face shape detected: ", response.data.predictions[0].class);
+        //         setApiResponse(response.data.predictions[0].class);
+        //     } else {
+        //         console.log("No face shape detected.");
+        //     }
+        // } catch (error) {
+        //     console.error("Error submitting image:", error.message);
+        // }
+    //     try {
+    //         const response = await axios.post(
+    //             "http://127.0.0.1:9090/infer", // New API endpoint
+    //             croppedImage, // Submit the cropped image
+    //             {
+    //                 headers: { "Content-Type": "application/json" }, // Assuming JSON is expected
+    //             }
+    //         );
+            
+    //         if (response.data.predictions && response.data.predictions.length > 0) {
+    //             console.log("Face shape detected: ", response.data.predictions[0].class);
+    //             setApiResponse(response.data.predictions[0].class);
+    //         } else {
+    //             console.log("No face shape detected.");
+    //         }
+    //     } catch (error) {
+    //         console.error("Error submitting image:", error.message);
+    //     }
+    // try {
+    //     const formData = new FormData();
+    //     formData.append("file", croppedImage); // Append the cropped image as a file
+    
+    //     const response = await axios.post(
+    //         "http://127.0.0.1:9090/infer", // Your endpoint
+    //         formData, // FormData object
+    //         {
+    //             headers: { "Content-Type": "multipart/form-data" }, // Correct content type for file uploads
+    //         }
+    //     );
+    
+    //     if (response.data.predictions && response.data.predictions.length > 0) {
+    //         console.log("Face shape detected: ", response.data.predictions[0].class);
+    //         setApiResponse(response.data.predictions[0].class);
+    //     } else {
+    //         console.log("No face shape detected.");
+    //     }
+    // } catch (error) {
+    //     console.error("Error submitting image:", error.response ? error.response.data : error.message);
+    // }
+    // };
+
+
+    const backgroundUrl = 'https://spexy-backend-159238452229.us-central1.run.app'
+
     const handleSubmit = async () => {
         if (!croppedImage) {
-            console.log("No image captured.");
+            // console.log("No image captured.");
+            alert("Capture an image first!");
             return;
         }
-
+    
         try {
-            const id = process.env.REACT_APP_RoboflowAPI;
+            // Convert base64 to blob
+            const base64Response = await fetch(croppedImage);
+            const blob = await base64Response.blob();
+            
+            // Create file from blob
+            const imageFile = new File([blob], "captured-image.jpg", { type: "image/jpeg" });
+            
+            const formData = new FormData();
+            formData.append("file", imageFile);
+        
             const response = await axios.post(
-                "https://detect.roboflow.com/face-shape-detection/1",
-                croppedImage, // Submit the cropped image
+                `${backgroundUrl}/infer`, // Use background here
+                formData,
                 {
-                    params: { api_key: id },
-                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    headers: { "Content-Type": "multipart/form-data" },
+                    timeout: 60000, // 60 second timeout
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity
                 }
             );
+        
             if (response.data.predictions && response.data.predictions.length > 0) {
                 console.log("Face shape detected: ", response.data.predictions[0].class);
                 setApiResponse(response.data.predictions[0].class);
             } else {
-                console.log("No face shape detected.");
+                // console.log("No face shape detected.");
+                alert("No face detected. Please try again!");
+                retakePicture()
+                
             }
         } catch (error) {
-            console.error("Error submitting image:", error.message);
+            console.error("Error:", error.response?.data?.detail || error.message);
         }
     };
 
